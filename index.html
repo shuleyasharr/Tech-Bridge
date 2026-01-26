@@ -401,7 +401,7 @@ width:100%;
 }
 
 .ticket-card { 
-   transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+   transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
     background: rgba(255, 255, 255, 0.02); 
     border: 1px solid rgba(255, 255, 255, 0.1); 
     padding: 50px 30px; 
@@ -428,19 +428,21 @@ width:100%;
 .ticket-card:hover::after { left: 100%; }
 
 .ticket-card:hover {
-    transform: translateY(-10px);
+transform: translateY(-15px) scale(1.02) !important;    
     border-color: var(--secondary) !important;
     box-shadow: 0 20px 40px rgba(0,0,0,0.6);
 }
 
 .btn {
+    display: inline-flex !important;
     transition: all 0.3s ease !important;
 }
 
         /* Добави това веднага под .btn { ... } */
 .btn:hover {
-    transform: scale(1.05);
-    filter: brightness(1.2);
+    transform: scale(1.1) !important;
+    filter: brightness(1.3) !important;
+    box-shadow: 0 0 20px var(--secondary) !important;
 }
 
 /* VIP Дизайн */
@@ -539,8 +541,15 @@ width:100%;
 .meta-item b { font-size: 14px; color: #fff; }
 
 /* Бутони */
-.org-btns a { display: flex; gap: 15px; margin-top: 30px; transition: all 0.3s ease !important; }
-        .org-btns a:hover {
+.org-btns { display: flex; 
+    gap: 15px; 
+    margin-top: 30px; }
+        .org-btns a { 
+    transition: all 0.3s ease !important; 
+}
+
+/* 3. ОСТАВИ 'a:hover' ТУК - това е ефектът при посочване */
+.org-btns a:hover {
     transform: translateY(-3px);
     background: rgba(255, 255, 255, 0.1) !important;
 }
@@ -975,6 +984,9 @@ width:100%;
     <a href="https://www.linkedin.com/in/shule-ramadan" target="_blank" class="btn">
         <i class="fab fa-linkedin"></i> LinkedIn
     </a>
+    <a href="#" class="btn btn-linktree">
+        <i class="fas fa-link"></i> Get in touch
+    </a>
 </div>
     </div>
 </section>
@@ -1066,6 +1078,7 @@ width:100%;
 </body>
 
 </html>
+
 
 
 
