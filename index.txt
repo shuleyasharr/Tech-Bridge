@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Bridge 2026</title>
+    
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;600;800&display=swap');
+
+        :root {
+            --bg: #020617;
+            --primary: #6366f1;
+            --secondary: #06b6d4;
+            --border: rgba(255, 255, 255, 0.08);
+            --glass: rgba(255, 255, 255, 0.02);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background: var(--bg); color: #f8fafc; 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            overflow-x: hidden; -webkit-font-smoothing: antialiased;
+        }
+
+        #dna-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; opacity: 0.4; }
+
+        /* NAVIGATION - NOT PINNED */
+        nav { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100px; 
+            padding: 0 10%; z-index: 100; display: flex; align-items: center; justify-content: space-between;
+        }
+        nav .logo { color: white; font-size: 12px; font-weight: 200; text-transform: uppercase; letter-spacing: 0.5em; text-decoration: none; }
+        nav .logo b { font-weight: 800; }
+        .nav-links { display: flex; gap: 45px; }
+        nav a { 
+            text-decoration: none; color: #94a3b8; font-size: 10px; 
+            font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; 
+            transition: 0.3s; position: relative; padding: 8px 0;
+        }
+        nav a::after {
+            content: ''; position: absolute; width: 100%; height: 1px;
+            bottom: -2px; left: 0; background: linear-gradient(90deg, transparent, var(--secondary), transparent);
+            transform: scaleX(0); transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1); opacity: 0;
+        }
+        nav a:hover::after { transform: scaleX(1); opacity: 1; filter: drop-shadow(0 0 5px var(--secondary)); }
+        nav a:hover { color: white; }
+
+        section { position: relative; z-index: 10; padding: 120px 10%; opacity: 0; transform: translateY(40px); transition: 1.5s cubic-bezier(0.19, 1, 0.22, 1); }
+        section.active { opacity: 1; transform: translateY(0); }
+
+        /* HERO */
+/* HERO CYBER SECTION */
+.hero-clean {
+    height: 100vh;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+    font-family: 'Inter', sans-serif; /* Използвай изчистен шрифт */
+}
+
+/* ЗАГЛАВИЕ: Огромно и тежко */
+.hero-title {
+    font-size: clamp(50px, 10vw, 120px);
+    font-weight: 900;
+    letter-spacing: -4px;
+    margin-bottom: 5px;
+    line-height: 1;
+}
+
+/* МОТО: Тънко и елегантно */
+.hero-motto {
+    font-size: clamp(18px, 3vw, 32px);
+    font-weight: 300;
+    color: var(--secondary); /* Твоето синьо */
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+}
+
+/* ПОДТЕКСТ: Слаб интензитет за фокус върху главното */
+.hero-sub {
+    font-size: 18px;
+    color: #666;
+    max-width: 600px;
+    margin: 0 auto 40px;
+}
+
+/* ЛОКАЦИЯ: Минимализъм */
+.hero-meta {
+    font-size: 12px;
+    letter-spacing: 5px;
+    color: #444;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+}
+
+/* УНИВЕРСАЛЕН ХАЙТЕК БУТОН (СИНХРОН) */
+.btn-modern-tech {
+    position: relative;
+    display: inline-block;
+    padding: 20px 45px;
+    background: transparent;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.4s cubic-bezier(0.2, 1, 0.3, 1);
+    cursor: pointer;
+    overflow: hidden;
+}
+
+/* Ъгловите елементи (Tech детайл) */
+.btn-modern-tech::before, 
+.btn-modern-tech::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    transition: all 0.4s;
+}
+
+/* Горния ляв ъгъл */
+.btn-modern-tech::before {
+    top: 0; left: 0;
+    border-top: 2px solid var(--secondary);
+    border-left: 2px solid var(--secondary);
+}
+
+/* Долния десен ъгъл */
+.btn-modern-tech::after {
+    bottom: 0; right: 0;
+    border-bottom: 2px solid var(--secondary);
+    border-right: 2px solid var(--secondary);
+}
+
+/* HOVER ЕФЕКТ */
+.btn-modern-tech:hover {
+    background: rgba(6, 182, 212, 0.05); /* Леко синьо сияние */
+    border-color: var(--secondary);
+    letter-spacing: 5px; /* Динамично разширяване на текста */
+    box-shadow: 0 0 30px rgba(6, 182, 212, 0.2);
+}
+
+.btn-modern-tech:hover::before,
+.btn-modern-tech:hover::after {
+    width: 100%;
+    height: 100%;
+}
+    /* SPEAKERS CATEGORIES */
+        /* Промяна на грида за 4 колони */
+/* Контейнер за спикърите */
+.sp-grid { 
+    display: grid; 
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 25px; 
+    margin-top: 50px;
+
+/* ДОБАВИ ТЕЗИ ТРИ РЕДА: */
+    max-width: 1350px; /* Ограничава ширината на цялата секция */
+    margin-left: auto;  /* Центрира грида */
+    margin-right: auto; /* Центрира грида */
+}
+
+/* Карта на лектора */
+.sp-card { 
+    background: rgba(255, 255, 255, 0.03); 
+    border: 1px solid rgba(255, 255, 255, 0.1); 
+    border-radius: 15px; 
+    overflow: hidden; 
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    position: relative;
+}
+
+.sp-card:hover {
+    border-color: var(--secondary);
+    box-shadow: 0 10px 30px rgba(6, 182, 212, 0.15);
+    transform: translateY(-5px);
+}
+
+/* Снимка с мащабиране */
+.sp-img-container {
+    width: 100%;
+    aspect-ratio: 1/1;
+    overflow: hidden;
+    position: relative;
+}
+
+.sp-card img { 
+    width: 100%; 
+    height: 100%;
+    object-fit: cover; 
+    filter: grayscale(1); 
+    transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1), filter 0.5s ease;
+}
+
+.sp-card:hover img { 
+    filter: grayscale(0); 
+    transform: scale(1.1); /* High-tech приближаване */
+}
+
+/* Инфо панел */
+.sp-info { 
+    padding: 20px; 
+    background: #020617;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.sp-text { flex: 1; }
+.sp-info h4 { font-size: 16px; font-weight: 800; color: #fff; margin-bottom: 2px; }
+.sp-info .role { color: #94a3b8; font-size: 11px; display: block; margin-bottom: 4px; }
+.sp-info .company { color: var(--secondary); font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+
+/* LinkedIn Бутон - High-Tech динамика */
+.sp-social-link { 
+    color: rgba(255, 255, 255, 0.3); 
+    font-size: 26px; 
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); 
+    display: flex;
+    margin-left: 15px;
+}
+
+.sp-card:hover .sp-social-link {
+    color: #0077b5;
+    transform: scale(1.2) translateY(-2px);
+    filter: drop-shadow(0 0 10px rgba(0, 119, 181, 0.8));
+}
+        /* PROGRAM SECTION */
+        .program-list { max-width: 800px; margin: 50px auto; }
+        .program-item { display: grid; grid-template-columns: 120px 1fr; padding: 30px 0; border-bottom: 1px solid var(--border); }
+        .prog-time { font-weight: 800; color: var(--primary); font-size: 18px; }
+
+        /* PARTNERS SHOWCASE WITH ARROWS */
+/* PARTNERS & SPONSORS CYBER-UI */
+.partners-hitech-section {
+    padding: 100px 10%;
+    text-align: center;
+}
+
+/* ЗАГЛАВИЯТА */
+.main-title {
+    font-size: 12px;
+    letter-spacing: 8px;
+    color: var(--secondary);
+    text-transform: uppercase;
+    margin-bottom: 50px;
+    font-weight: 800;
+  text-align: left;
+width:100%;
+}
+
+.strategic-label {
+    font-size: 28px;
+    font-weight: 900;
+    color: #fff;
+    margin-bottom: 20px;
+    display: block;
+    text-transform: uppercase;
+}
+
+/* СТРАТЕГИЧЕСКИ ЛОГА */
+.big-logos-row {
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.big-logo-item {
+    transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.big-logo-item:hover {
+    transform: translateY(-10px) scale(1.05);
+    filter: drop-shadow(0 0 15px var(--secondary));
+}
+
+.big-logo-item b { font-size: 32px; color: #fff; display: block; }
+.big-logo-item span { font-size: 9px; color: #475569; letter-spacing: 2px; }
+
+/* СЛАЙДЪР И СТРЕЛКИ */
+.slider-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    margin: 10px 0;
+}
+
+.nav-btn {
+    background: transparent;
+    border: 1px solid rgba(6, 182, 212, 0.2);
+    color: var(--secondary);
+    width: 50px; height: 50px;
+    font-size: 20px;
+    cursor: pointer;
+    position: relative;
+    transition: 0.4s;
+    display: flex; align-items: center; justify-content: center;
+    clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%); /* Cyber-cut shape */
+}
+
+.nav-btn:hover {
+    background: rgba(6, 182, 212, 0.1);
+    border-color: var(--secondary);
+    box-shadow: 0 0 20px var(--secondary);
+    color: #fff;
+}
+
+/* ПАРТНЬОРИ СЛАЙДОВЕ */
+.partners-slideshow {
+    position: relative;
+    width: 500px;
+    height: 100px;
+    overflow: hidden;
+}
+
+.partner-slide {
+    position: absolute;
+    width: 100%; height: 100%;
+    display: flex; justify-content: center; align-items: center; gap: 40px;
+    opacity: 0;
+    transform: skewX(-10deg) translateX(30px);
+    transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.partner-slide.active {
+    opacity: 1;
+    transform: skewX(0) translateX(0);
+}
+
+/* ДИНАМИЧЕН ХАЙТЕК БУТОН */
+.sponsor-cta-wrapper {
+    margin-top: 80px;
+}
+
+.btn-cyber {
+    position: relative;
+    padding: 15px 40px;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    color: #fff;
+    text-transform: uppercase;
+    text-decoration: none;
+    background: transparent;
+    border: 1px solid var(--secondary);
+    overflow: hidden;
+    transition: 0.5s;
+    display: inline-block;
+}
+
+.btn-cyber::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.4), transparent);
+    transition: 0.5s;
+}
+
+.btn-cyber:hover::before {
+    left: 100%;
+}
+
+.btn-cyber:hover {
+    box-shadow: 0 0 30px var(--secondary);
+    background: var(--secondary);
+    color: #000;
+}
+        /* TICKETS */
+        /* Решетка за 5 билета - на десктоп се подреждат автоматично */
+/* --- НОВ HIGH-TECH TICKETS CSS --- */
+.ticket-grid { 
+    display: grid; 
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 25px; 
+    margin-top: 50px; 
+}
+
+/* Контейнер за втория ред */
+.last-row {
+    grid-column: 1 / -1; 
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-top: 25px;
+}
+
+.ticket-card { 
+    background: rgba(255, 255, 255, 0.02); 
+    border: 1px solid rgba(255, 255, 255, 0.1); 
+    padding: 50px 30px; 
+    border-radius: 30px; 
+    text-align: center; 
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(15px);
+}
+
+/* Сканиращ светлинен ефект при hover */
+.ticket-card::after {
+    content: '';
+    position: absolute;
+    top: -50%; left: -150%;
+    width: 200%; height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.08), transparent);
+    transform: rotate(45deg);
+    transition: 0.8s;
+}
+
+.ticket-card:hover::after { left: 100%; }
+
+.ticket-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    border-color: var(--secondary);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+}
+
+/* VIP Дизайн */
+.vip-card {
+    border: 2px solid transparent;
+    background: linear-gradient(#020617, #020617) padding-box,
+                linear-gradient(135deg, #6366f1, #06b6d4) border-box;
+    box-shadow: 0 0 30px rgba(99, 102, 241, 0.2);
+    width: 420px;
+}
+
+.vip-card h3 { color: #fff; font-weight: 800; text-shadow: 0 0 10px rgba(99, 102, 241, 0.5); }
+
+/* Corporate Дизайн */
+.corp-card {
+    border: 1px dashed var(--secondary);
+    width: 420px;
+}
+
+.ticket-card ul { list-style: none; padding: 0; margin: 25px 0; }
+.ticket-card li { font-size: 12px; color: #94a3b8; margin: 12px 0; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.ticket-card li i { color: var(--secondary); font-size: 10px; }
+
+@media (max-width: 1024px) {
+    .ticket-grid { grid-template-columns: 1fr; }
+    .last-row { flex-direction: column; align-items: center; }
+    .vip-card, .corp-card { width: 100%; }
+}
+  
+
+        /* ORGANIZER */
+.org-section { 
+    display: flex; 
+    gap: 80px; 
+    align-items: center; 
+    padding: 100px 5%;
+    background: radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.05), transparent);
+    border-radius: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+/* Фенси рамка за снимката */
+.org-img-wrapper {
+    position: relative;
+    padding: 15px;
+}
+
+.org-img-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    border: 2px solid var(--secondary);
+    border-radius: 30px;
+    clip-path: polygon(0 0, 30% 0, 30% 10%, 0 10%, 0 90%, 10% 90%, 10% 100%, 0 100%); /* High-tech ъгли */
+}
+
+.org-img { 
+    width: 320px; 
+    height: 400px;
+    object-fit: cover;
+    border-radius: 20px; 
+    filter: grayscale(0.2) contrast(1.1);
+    box-shadow: 0 0 30px rgba(0,0,0,0.5);
+}
+
+.org-content h2 { 
+    font-size: 48px; 
+    background: linear-gradient(90deg, #fff, var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.org-title {
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 12px;
+    font-weight: 800;
+    margin-bottom: 20px;
+    display: block;
+}
+
+/* Секция с бизнеси/опит */
+.org-meta {
+    display: flex;
+    gap: 30px;
+    margin: 30px 0;
+}
+
+.meta-item {
+    border-left: 1px solid var(--secondary);
+    padding-left: 15px;
+}
+
+.meta-item span { display: block; font-size: 10px; color: #64748b; text-transform: uppercase; }
+.meta-item b { font-size: 14px; color: #fff; }
+
+/* Бутони */
+.org-btns { display: flex; gap: 15px; margin-top: 30px; }
+
+.btn-linktree {
+    background: linear-gradient(45deg, #06b6d4, #6366f1);
+    color: white !important;
+    border: none !important;
+    box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+}
+
+.btn-linktree:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(99, 102, 241, 0.5);
+}
+
+@media (max-width: 1024px) {
+    .org-section { flex-direction: column; text-align: center; gap: 40px; }
+    .org-meta { justify-content: center; }
+}
+    </style>
+</head>
+<body>
+
+    <canvas id="dna-canvas"></canvas>
+
+    <nav>
+        <a href="#" class="logo">TECH <b>BRIDGE</b></a>
+        <div class="nav-links">
+            <a href="#speakers">Speakers</a>
+            <a href="#program">Program</a>
+            <a href="#partners">Partners</a>
+            <a href="#tickets">Tickets</a>
+        </div>
+        <a href="#contact" class="btn" style="padding: 10px 20px;">Sponsor</a>
+    </nav>
+
+ <section class="hero-clean">
+    <div class="hero-main-box">
+        <h1 class="hero-title">TECH BRIDGE 2026</h1>
+        
+        <h2 class="hero-motto">Human Intelligence meets Next-Gen Tech</h2>
+        
+        <p class="hero-sub">The elite hybrid summit for AI, Web3 & Cybersecurity.</p>
+        
+        <div class="hero-meta">
+            MARCH 2026 • SOFIA & ONLINE
+        </div>
+
+        <div class="hero-cta">
+    <a href="#tickets" class="btn-modern-tech">
+        Secure Your Seat
+    </a>
+</div>
+</section>
+
+<section id="speakers" style="padding: 80px 0; background: #000;">
+    <h2 style="font-size: 11px; letter-spacing: 4px; color: var(--secondary); text-align: center; margin-bottom: 50px; text-transform: uppercase;">01 // THE ARCHITECTS OF THE FUTURE</h2>
+
+    <div class="sp-grid">
+
+        <div class="sp-card">
+            <div class="sp-img-container"><img src="alina-yaneva.jpg" alt="Alina Yaneva"></div>
+            <div class="sp-info">
+                <div class="sp-text">
+                    <h4>Alina Yaneva</h4>
+                    <span class="role">Program Manager</span>
+                    <div class="company">Alumerix / ex-Walmart</div>
+                </div>
+                <a href="https://www.linkedin.com/in/alina-yaneva/" target="_blank" class="sp-social-link"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+
+        <div class="sp-card">
+            <div class="sp-img-container"><img src="nadin-hamoud.jpg" alt="Nadin Hamoud"></div>
+            <div class="sp-info">
+                <div class="sp-text">
+                    <h4>Nadin Hamoud</h4>
+                    <span class="role">Account Manager</span>
+                    <div class="company">Google (Netherlands)</div>
+                </div>
+                <a href="https://www.linkedin.com/in/nadinehamud/" target="_blank" class="sp-social-link"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+
+        <div class="sp-card">
+            <div class="sp-img-container"><img src="milen-petrov.jpg" alt="Milen Petrov"></div>
+            <div class="sp-info">
+                <div class="sp-text">
+                    <h4>Milen Petrov</h4>
+                    <span class="role">Sr. Project Manager</span>
+                    <div class="company">ex-Microsoft (USA)</div>
+                </div>
+                <a href="https://www.linkedin.com/in/milenp/" target="_blank" class="sp-social-link"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+
+        <div class="sp-card">
+            <div class="sp-img-container"><img src="ventsislav-ivanov.jpg" alt="Ventsislav Ivanov"></div>
+            <div class="sp-info">
+                <div class="sp-text">
+                    <h4>Ventsislav Ivanov</h4>
+                    <span class="role">Chief Legal Counsel</span>
+                    <div class="company">Ministry of Interior</div>
+                </div>
+                <a href="https://www.linkedin.com/in/ventsislav-ivanov-45a9761a9/" target="_blank" class="sp-social-link"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+
+        <div class="sp-card">
+            <div class="sp-img-container"><img src="boris-goncharov.jpg" alt="Boris Goncharov"></div>
+            <div class="sp-info">
+                <div class="sp-text">
+                    <h4>Vasil Anastasov</h4>
+                    <span class="role">Founder</span>
+                    <div class="company">DevHubOne</div>
+                </div>
+                <a href="https://www.linkedin.com/in/vasil-anastasov/" target="_blank" class="sp-social-link"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+
+        <div class="sp-card">
+            <div class="sp-img-container"><img src="alexander-klasanov.jpg" alt="Alexander Klasanov"></div>
+            <div class="sp-info">
+                <div class="sp-text">
+                    <h4>Boris Goncharov</h4>
+                    <span class="role">Co-Founder</span>
+                    <div class="company">AMATAS</div>
+                </div>
+                <a href="https://www.linkedin.com/in/brgoncharov/" target="_blank" class="sp-social-link"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+
+        <div class="sp-card">
+            <div class="sp-img-container"><img src="dimana-dodova.jpg" alt="Dimana Dodova"></div>
+            <div class="sp-info">
+                <div class="sp-text">
+                    <h4>Dimana Dodova</h4>
+                    <span class="role">Cyberpsychologist</span>
+                    <div class="company">CyberCLUB</div>
+                </div>
+                <a href="#" target="_blank" class="sp-social-link"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+
+        <div class="sp-card">
+            <div class="sp-img-container"><img src="anton-puliyski.jpg" alt="Anton Puliyski"></div>
+            <div class="sp-info">
+                <div class="sp-text">
+                    <h4>Anton Puliyski</h4>
+                    <span class="role">Cyber Researcher</span>
+                    <div class="company">CyberCLUB</div>
+                </div>
+                <a href="#" target="_blank" class="sp-social-link"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+
+        <div class="sp-card">
+            <div class="sp-img-container"><img src="yanko-spasov.jpg" alt="Yanko Spasov"></div>
+            <div class="sp-info">
+                <div class="sp-text">
+                    <h4>Yanko Spasov</h4>
+                    <span class="role">Consultant</span>
+                    <div class="company">Antivirus BG / CyberCLUB</div>
+                </div>
+                <a href="#" target="_blank" class="sp-social-link"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+
+        <div class="sp-card">
+            <div class="sp-img-container"><img src="krasimir-traikov.jpg" alt="Krasimir Traikov"></div>
+            <div class="sp-info">
+                <div class="sp-text">
+                    <h4>Krasimir Traikov</h4>
+                    <span class="role">Security Trainer</span>
+                    <div class="company">CyberCLUB</div>
+                </div>
+                <a href="#" target="_blank" class="sp-social-link"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+
+        <div class="sp-card">
+            <div class="sp-img-container"><img src="alexandra-stefanova.jpg" alt="Alexandra Stefanova"></div>
+            <div class="sp-info">
+                <div class="sp-text">
+                    <h4>A. Stefanova</h4>
+                    <span class="role">Compliance Specialist</span>
+                    <div class="company">CyberCLUB</div>
+                </div>
+                <a href="#" target="_blank" class="sp-social-link"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+
+        <div class="sp-card">
+            <div class="sp-img-container"><img src="vasil-anastasov.jpg" alt="Vasil Anastasov"></div>
+            <div class="sp-info">
+                <div class="sp-text">
+                    <h4>Vasil Anastasov</h4>
+                    <span class="role">Founder DevHubOne</span>
+                    <div class="company">Forbes 30 Under 30</div>
+                </div>
+                <a href="#" target="_blank" class="sp-social-link"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+
+        <div class="sp-card">
+            <div class="sp-img-container"><img src="antoan-shotarov.jpg" alt="Antoan Shotarov"></div>
+            <div class="sp-info">
+                <div class="sp-text">
+                    <h4>Antoan Shotarov</h4>
+                    <span class="role">Serial Entrepreneur</span>
+                    <div class="company">DisruptHR</div>
+                </div>
+                <a href="#" target="_blank" class="sp-social-link"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+
+        <div class="sp-card">
+            <div class="sp-img-container"><img src="anastasia-stoyanova.jpg" alt="Anastasia Stoyanova"></div>
+            <div class="sp-info">
+                <div class="sp-text">
+                    <h4>A. Stoyanova</h4>
+                    <span class="role">VP People & Culture</span>
+                    <div class="company">Betty / ex-VMware</div>
+                </div>
+                <a href="#" target="_blank" class="sp-social-link"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+
+        <div class="sp-card">
+            <div class="sp-img-container"><img src="georgi-malchev.jpg" alt="Georgi Malchev"></div>
+            <div class="sp-info">
+                <div class="sp-text">
+                    <h4>Georgi Malchev</h4>
+                    <span class="role">Managing Partner</span>
+                    <div class="company">Xplora / DisruptHR</div>
+                </div>
+                <a href="#" target="_blank" class="sp-social-link"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+
+        <div class="sp-card">
+            <div class="sp-img-container"><img src="svetla-dobreva.jpg" alt="Svetla Dobreva"></div>
+            <div class="sp-info">
+                <div class="sp-text">
+                    <h4>Svetla Dobreva</h4>
+                    <span class="role">Employer Branding</span>
+                    <div class="company">Commerzbank / DisruptHR</div>
+                </div>
+                <a href="#" target="_blank" class="sp-social-link"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+
+        <div class="sp-card">
+            <div class="sp-img-container"><img src="plamen-vasilev.jpg" alt="Plamen Vasilev"></div>
+            <div class="sp-info">
+                <div class="sp-text">
+                    <h4>Plamen Vasilev</h4>
+                    <span class="role">CPO Holcim BG</span>
+                    <div class="company">BAPM / DisruptHR</div>
+                </div>
+                <a href="#" target="_blank" class="sp-social-link"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+
+        <div class="sp-card">
+            <div class="sp-img-container"><img src="silvia-andreeva.jpg" alt="Silvia Andreeva"></div>
+            <div class="sp-info">
+                <div class="sp-text">
+                    <h4>Silvia Andreeva</h4>
+                    <span class="role">CMO Syscom Eng.</span>
+                    <div class="company">DisruptHR</div>
+                </div>
+                <a href="#" target="_blank" class="sp-social-link"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+
+    </div> </section>
+
+
+    <section id="program">
+        <h2 style="font-size: 11px; letter-spacing: 4px; color: var(--secondary);">02 // AGENDA</h2>
+        <div class="program-list">
+            <div class="program-item"><div class="prog-time">09:30</div><div><h4>Registration & Coffee</h4><p>Morning networking and badge pickup.</p></div></div>
+            <div class="program-item"><div class="prog-time">11:00</div><div><h4>Opening Panel</h4><p>The Future of AI in Institutional Finance.</p></div></div>
+            <div class="program-item"><div class="prog-time">18:00</div><div><h4>VIP Rooftop</h4><p>Exclusive networking at the NYC Hall Terrace.</p></div></div>
+        </div>
+    </section>
+
+<section id="partners" class="partners-hitech-section">
+    <h2 class="main-title">// PARTNERS & SPONSORS</h2>
+    
+    <span class="strategic-label">Global Strategic Partners</span>
+
+    <div class="big-logos-row">
+        <div class="big-logo-item"><b>Viber</b><span>Viber</span></div>
+        <div class="big-logo-item"><b>GDG Sofia</b><span>GDG</span></div>
+        <div class="big-logo-item"><b>InvestSofia</b><span>InvestSofia</span></div>
+    </div>
+
+    <div class="slider-container">
+        <button class="nav-btn" onclick="movePartnerSlide(-1)">[</button>
+        
+        <div class="partners-slideshow">
+            <div class="partner-slide active">
+                <div class="sub-item"><b>DisruptHR</b><span style="font-size: 9px; color: #64748b;">PR & LOGISTIC</span></div>
+                <div class="sub-item"><b>CyberCLUB</b><span style="font-size: 9px; color: #64748b;">PR & LOGISTIC</span></div>
+            </div>
+            <div class="partner-slide">
+                <div class="sub-item"><b>o2k.tech</b><span style="font-size: 9px; color: #64748b;">WEB3 TECH</span></div>
+                <div class="sub-item"><b>Rewardly.Tech</b><span style="font-size: 9px; color: #64748b;">WEB2 TECH</span></div>
+            </div>
+            <div class="partner-slide">
+                <div class="sub-item"><b>BitFlame</b><span style="font-size: 9px; color: #64748b;">WEB2 COMMUNITY</span></div>
+                <div class="sub-item"><b>Crypto Tax</b><span style="font-size: 9px; color: #64748b;">WEB23 COMMUNITY</span></div>
+            </div>
+        </div>
+
+        <button class="nav-btn" onclick="movePartnerSlide(1)">]</button>
+    </div>
+
+    <div class="sponsor-cta-wrapper">
+        <a href="#contact" class="btn-cyber">Become a Partner</a>
+    </div>
+</section>
+    
+    
+
+    <section id="tickets">
+    <h2 style="font-size: 11px; letter-spacing: 4px; color: var(--secondary); text-align: center; margin-bottom: 50px;">04 // TICKETS</h2>
+    
+    <div class="ticket-grid">
+        <div class="ticket-card">
+            <h3>EARLY BIRD</h3>
+            <div class="price">€30</div>
+            <ul>
+                <li><i class="fas fa-check-circle"></i> Full Event Access</li>
+                <li><i class="fas fa-check-circle"></i> Cocktail Zone</li>
+            </ul>
+            <a href="#" class="btn">Secure Access</a>
+        </div>
+
+        <div class="ticket-card" style="border-color: var(--primary);">
+            <h3>STANDARD</h3>
+            <div class="price">€60</div>
+            <ul>
+                <li><i class="fas fa-check-circle"></i> Full Event Access</li>
+                <li><i class="fas fa-check-circle"></i> Cocktail Zone</li>
+            </ul>
+            <a href="#" class="btn" style="background: var(--primary); color: white;">Secure Access</a>
+        </div>
+
+        <div class="ticket-card">
+            <h3>ONLINE</h3>
+            <div class="price">€10</div>
+            <ul>
+                <li><i class="fas fa-check-circle"></i> HIGH QUALITY LIVE STREAM</li>
+            </ul>
+            <a href="#" class="btn">Secure Access</a>
+        </div>
+
+        <div class="last-row">
+            <div class="ticket-card vip-card">
+                <div style="color: var(--primary); font-size: 10px; font-weight: 800; letter-spacing: 2px; margin-bottom: 10px;">MOST EXCLUSIVE</div>
+                <h3>VIP LUXURY</h3>
+                <div class="price" style="font-size: 54px; margin: 15px 0;">€125</div>
+                <ul>
+                    <li><i class="fas fa-comment-dots"></i> <b>EVERYTHING IN STANDARD</b></li>
+                    <li><i class="fas fa-glass-cheers"></i> <b>ROOFTOP AFTER-PARTY</b></li>
+                    <li><i class="fas fa-crown"></i> <b>FRONT ROW RESERVED</b></li>
+<li><i class="fas fa-crown"></i> <b>VIP LOUNGE WITH THE SPEAKERS</b></li>
+                </ul>
+                <a href="#" class="btn" style="background: white; color: black; width: 100%; font-weight: 900;">BECOME A VIP</a>
+            </div>
+
+            <div class="ticket-card corp-card">
+                <div style="background: var(--secondary); color: black; font-size: 10px; font-weight: 800; padding: 5px 15px; border-radius: 50px; display: inline-block; margin-bottom: 15px;">BUNDLE OFFER</div>
+                <h3>CORPORATE</h3>
+                <div class="price">€240</div>
+                <p style="font-size: 10px; color: var(--secondary); margin-top: -10px;">TAKE 5, PAY 4</p>
+                <ul>
+                    <li><i class="fas fa-users"></i> ACCESS FOR 5 </li>
+                </ul>
+                <a href="#" class="btn" style="border: 1px solid var(--secondary); background: transparent; color: white;">Secure Bundle</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="organizer">
+    <div class="org-section">
+        <div class="org-img-wrapper">
+            <img src="shuleyashar.png" alt="Shule Yashar" class="org-img">
+        </div>
+
+        <div class="org-content">
+            <span class="org-title">Strategic Architect & Founder</span>
+            <h2>Shule Yashar</h2>
+            
+            <p style="color: #94a3b8; line-height: 1.8; max-width: 600px; font-size: 15px;">
+               ech Bridge 2026 is powered by DS Legacy, a strategic consultancy dedicated to building lasting professional ecosystems, and Tech Club "BitFlame" — one of the fastest-growing tech communities in the region.
+
+Founded by Shule Ramadan, a Technical Project Manager with a vision for global connectivity, our mission is to dismantle the barriers between local talent and global industry giants.
+
+Why Trust Us?
+Proven Track Record: We are the creators of the high-impact series "From Harvard to the Boardroom", which successfully united executives from Fortune 500 companies like J.P. Morgan, Walmart, and EY.
+
+Rapid Growth: In less than 6 months, we have built a network of over 4,000 professionals and secured strategic alliances with Google Developers Group, Viber, and Invest Sofia.
+
+Expertise-Driven: Our team brings 7+ years of experience in Agile Project Management, Fintech, and Digital Brand Strategy to ensure every event is a masterpiece of logistics and value.</p>
+
+            <div class="org-meta">
+                <div class="meta-item">
+                    <span>Founder</span>
+                    <b>BitFlame Tech Club</b>
+                </div>
+                <div class="meta-item">
+                    <span>Expertise</span>
+                    <b>7+ Years Project Management</b>
+                </div>
+                <div class="meta-item">
+                    <span>Network</span>
+                    <b>Global Tech Bridge</b>
+                </div>
+            </div>
+
+            <div class="org-btns">
+                <a href="https://linkedin.com" target="_blank" class="btn" style="background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: #fff;">
+                    <i class="fab fa-linkedin" style="margin-right: 8px;"></i> LinkedIn
+                </a>
+                <a href="https://linktr.ee/yourlink" target="_blank" class="btn btn-linktree">
+                    <i class="fas fa-rocket" style="margin-right: 8px;"></i> Tech Club Linktree
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+ <script>
+    // 1. Lenis & DNA Canvas (Твоите съществуващи анимации)
+    const lenis = new Lenis({ duration: 1.5 });
+    function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+    requestAnimationFrame(raf);
+
+    const canvas = document.getElementById('dna-canvas');
+    if (canvas) {
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        function init() {
+            canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+            particles = [];
+            for (let i = 0; i < 80; i++) particles.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, sx: (Math.random()-0.5)*0.2, sy: (Math.random()-0.5)*0.2 });
+        }
+        function anim() {
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+            particles.forEach((p, i) => {
+                p.x += p.sx; p.y += p.sy;
+                if (p.x > canvas.width) p.x=0; if (p.y > canvas.height) p.y=0;
+                particles.slice(i+1).forEach(p2 => {
+                    let d = Math.hypot(p.x-p2.x, p.y-p2.y);
+                    if (d < 120) { ctx.strokeStyle = `rgba(180,210,255,${0.15*(1-d/120)})`; ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(p2.x,p2.y); ctx.stroke(); }
+                });
+            });
+            requestAnimationFrame(anim);
+        }
+        window.addEventListener('resize', init);
+        init(); anim();
+    }
+
+    // --- НОВА КИБЕР ЛОГИКА ЗА ПАРТНЬОРИ ---
+    let pIndex = 0;
+    let pTimer;
+
+    function updatePartners(index) {
+        const pSlides = document.querySelectorAll('.partner-slide');
+        // Ако няма слайдове, не прави нищо
+        if (pSlides.length === 0) return;
+
+        // Премахваме активния клас от текущия
+        pSlides[pIndex].classList.remove('active');
+
+        // Изчисляваме новия индекс
+        pIndex = (index + pSlides.length) % pSlides.length;
+
+        // Добавяме активния клас на новия
+        pSlides[pIndex].classList.add('active');
+        
+        // Актуализираме точките (pagination), ако ги има
+        const pDots = document.querySelectorAll('.dot');
+        if (pDots.length > 0) {
+            pDots.forEach(d => d.classList.remove('active'));
+            if (pDots[pIndex]) pDots[pIndex].classList.add('active');
+        }
+    }
+
+    function movePartnerSlide(step) {
+        startPartnerTimer(); // Рестартира таймера при ръчно кликане
+        updatePartners(pIndex + step);
+    }
+
+    function startPartnerTimer() {
+        clearInterval(pTimer);
+        pTimer = setInterval(() => {
+            updatePartners(pIndex + 1);
+        }, 5000);
+    }
+
+    // Инициализация при зареждане
+    document.addEventListener('DOMContentLoaded', () => {
+        startPartnerTimer();
+
+        // Intersection Observer (запазваме го, за да се появяват секциите)
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => { 
+                if(entry.isIntersecting) entry.target.classList.add('active'); 
+            });
+        }, { threshold: 0.1 });
+        
+        document.querySelectorAll('section').forEach(s => observer.observe(s));
+    });
+</script>
+
+</body>
+</html>

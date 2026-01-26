@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Bridge 2026 | Luxury Edition</title>
+    
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;600;800&display=swap');
+
+        :root {
+            --bg: #020617;
+            --primary: #6366f1;
+            --secondary: #06b6d4;
+            --border: rgba(255, 255, 255, 0.08);
+            --glass: rgba(255, 255, 255, 0.02);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background: var(--bg); color: #f8fafc; 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            overflow-x: hidden; -webkit-font-smoothing: antialiased;
+        }
+
+        #dna-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; opacity: 0.4; }
+
+        /* NAVIGATION - NOT PINNED */
+        nav { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100px; 
+            padding: 0 10%; z-index: 100; display: flex; align-items: center; justify-content: space-between;
+        }
+        nav .logo { color: white; font-size: 12px; font-weight: 200; text-transform: uppercase; letter-spacing: 0.5em; text-decoration: none; }
+        nav .logo b { font-weight: 800; }
+        .nav-links { display: flex; gap: 45px; }
+        nav a { 
+            text-decoration: none; color: #94a3b8; font-size: 10px; 
+            font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; 
+            transition: 0.3s; position: relative; padding: 8px 0;
+        }
+        nav a::after {
+            content: ''; position: absolute; width: 100%; height: 1px;
+            bottom: -2px; left: 0; background: linear-gradient(90deg, transparent, var(--secondary), transparent);
+            transform: scaleX(0); transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1); opacity: 0;
+        }
+        nav a:hover::after { transform: scaleX(1); opacity: 1; filter: drop-shadow(0 0 5px var(--secondary)); }
+        nav a:hover { color: white; }
+
+        section { position: relative; z-index: 10; padding: 120px 10%; opacity: 0; transform: translateY(40px); transition: 1.5s cubic-bezier(0.19, 1, 0.22, 1); }
+        section.active { opacity: 1; transform: translateY(0); }
+
+        /* HERO */
+        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+        .hero h1 { 
+            font-size: clamp(35px, 7vw, 75px); font-weight: 800; letter-spacing: -3px; line-height: 1;
+            background: linear-gradient(135deg, #fff 40%, var(--primary) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+
+        /* SPEAKERS CATEGORIES */
+        .speaker-category-title { font-size: 10px; letter-spacing: 4px; color: var(--secondary); margin: 60px 0 30px; text-transform: uppercase; border-left: 2px solid var(--primary); padding-left: 15px; }
+        .sp-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        .sp-card { background: var(--glass); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; transition: 0.5s; aspect-ratio: 4/5; }
+        .sp-card img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1); transition: 0.8s; }
+        .sp-card:hover img { filter: grayscale(0); transform: scale(1.05); }
+        .sp-info { padding: 15px; background: #020617; text-align: center; }
+        .sp-info h4 { font-size: 14px; margin-bottom: 5px; }
+        .sp-info small { color: var(--secondary); font-size: 10px; font-weight: 700; text-transform: uppercase; }
+
+        /* PROGRAM SECTION */
+        .program-list { max-width: 800px; margin: 50px auto; }
+        .program-item { display: grid; grid-template-columns: 120px 1fr; padding: 30px 0; border-bottom: 1px solid var(--border); }
+        .prog-time { font-weight: 800; color: var(--primary); font-size: 18px; }
+
+        /* PARTNERS SHOWCASE WITH ARROWS */
+        .partner-wrapper { position: relative; max-width: 900px; margin: 0 auto; display: flex; align-items: center; justify-content: center; }
+        .partner-showcase { text-align: center; min-height: 250px; width: 100%; display: flex; flex-direction: column; justify-content: center; }
+        .cat-slide { display: none; }
+        .cat-slide.active { display: block; animation: fadeIn 0.8s ease-in-out; }
+        .cat-title { font-size: 32px; font-weight: 800; color: var(--secondary); letter-spacing: -1px; margin-bottom: 30px; }
+        .partner-list { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
+        .p-item { font-size: 14px; font-weight: 400; color: #94a3b8; letter-spacing: 2px; text-transform: uppercase; }
+        
+        .arrow-btn { background: none; border: 1px solid var(--border); color: white; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; transition: 0.3s; position: absolute; top: 50%; transform: translateY(-50%); z-index: 20; }
+        .arrow-btn:hover { border-color: var(--secondary); color: var(--secondary); }
+        .prev { left: -70px; } .next { right: -70px; }
+
+        /* TICKETS */
+        .ticket-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; margin-top: 50px; }
+        .ticket-card { background: var(--glass); border: 1px solid var(--border); padding: 60px 30px; border-radius: 30px; text-align: center; transition: 0.4s; }
+        .ticket-card:hover { border-color: var(--secondary); transform: translateY(-10px); }
+        .price { font-size: 48px; font-weight: 800; margin: 25px 0; color: #fff; }
+
+        /* ORGANIZER */
+        .org-section { display: flex; gap: 50px; align-items: center; margin-top: 50px; }
+        .org-img { width: 300px; border-radius: 25px; filter: grayscale(1); border: 1px solid var(--border); }
+
+        .btn { background: #fff; color: #000; padding: 15px 35px; border-radius: 12px; font-weight: 800; text-transform: uppercase; font-size: 10px; text-decoration: none; cursor: pointer; transition: 0.3s; display: inline-block; }
+        .btn:hover { background: var(--secondary); color: white; box-shadow: 0 0 20px rgba(6, 182, 212, 0.4); }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @media (max-width: 1024px) { .sp-grid, .ticket-grid, .org-section { grid-template-columns: 1fr; flex-direction: column; text-align: center; } .prev, .next { position: relative; left: 0; right: 0; transform: none; margin: 10px; } }
+    </style>
+</head>
+<body>
+
+    <canvas id="dna-canvas"></canvas>
+
+    <nav>
+        <a href="#" class="logo">TECH <b>BRIDGE</b></a>
+        <div class="nav-links">
+            <a href="#speakers">Speakers</a>
+            <a href="#program">Program</a>
+            <a href="#partners">Partners</a>
+            <a href="#tickets">Tickets</a>
+        </div>
+        <a href="#contact" class="btn" style="padding: 10px 20px;">Sponsor</a>
+    </nav>
+
+    <section class="hero">
+        <h1>BEYOND THE SYNERGY</h1>
+        <p style="color: #444; letter-spacing: 6px; margin-top: 20px;">CAPITAL FORT • MARCH 2026 • SOFIA</p>
+    </section>
+
+    <section id="speakers">
+        <h2 style="font-size: 11px; letter-spacing: 4px; color: var(--secondary);">01 // LINEUP</h2>
+        
+        <div class="speaker-category-title">Institutional Leadership</div>
+        <div class="sp-grid">
+            <div class="sp-card"><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400"><div class="sp-info"><h4>Former Program Manager</h4><small>Walmart Canada</small></div></div>
+            <div class="sp-card"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400"><div class="sp-info"><h4>VP of Product</h4><small>JP Morgan (Chicago)</small></div></div>
+        </div>
+
+        <div class="speaker-category-title">Cyber & Risk Intelligence</div>
+        <div class="sp-grid">
+            <div class="sp-card"><img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400"><div class="sp-info"><h4>Senior PM</h4><small>RBC Dominion Securities</small></div></div>
+            <div class="sp-card"><img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400"><div class="sp-info"><h4>Chief Legal Counsel</h4><small>Min. of Interior / Interpol</small></div></div>
+        </div>
+    </section>
+
+    <section id="program">
+        <h2 style="font-size: 11px; letter-spacing: 4px; color: var(--secondary);">02 // AGENDA</h2>
+        <div class="program-list">
+            <div class="program-item"><div class="prog-time">09:30</div><div><h4>Registration & Coffee</h4><p>Morning networking and badge pickup.</p></div></div>
+            <div class="program-item"><div class="prog-time">11:00</div><div><h4>Opening Panel</h4><p>The Future of AI in Institutional Finance.</p></div></div>
+            <div class="program-item"><div class="prog-time">18:00</div><div><h4>VIP Rooftop</h4><p>Exclusive networking at the NYC Hall Terrace.</p></div></div>
+        </div>
+    </section>
+
+    <section id="partners">
+        <div class="partner-wrapper">
+            <button class="arrow-btn prev" onclick="moveSlide(-1)"><i class="fas fa-chevron-left"></i></button>
+            <div class="partner-showcase">
+                <div class="cat-slide active">
+                    <div class="cat-title">STRATEGIC PARTNERS</div>
+                    <div class="partner-list"><div class="p-item">Viber</div><div class="p-item">Google Cloud</div><div class="p-item">Walmart Tech</div></div>
+                </div>
+                <div class="cat-slide">
+                    <div class="cat-title">ECOSYSTEM</div>
+                    <div class="partner-list"><div class="p-item">Tuk-Tam</div><div class="p-item">GDG Sofia</div><div class="p-item">Rewardly</div></div>
+                </div>
+                <div class="cat-slide">
+                    <div class="cat-title">MEDIA</div>
+                    <div class="partner-list"><div class="p-item">Bloomberg</div><div class="p-item">Forbes</div><div class="p-item">Investor.bg</div></div>
+                </div>
+                <div class="cat-slide">
+                    <div class="cat-title">COMMUNITY</div>
+                    <div class="partner-list"><div class="p-item">Tech Club</div><div class="p-item">BitFlame</div><div class="p-item">Dev.bg</div></div>
+                </div>
+            </div>
+            <button class="arrow-btn next" onclick="moveSlide(1)"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </section>
+
+    <section id="tickets">
+        <h2 style="font-size: 11px; letter-spacing: 4px; color: var(--secondary); text-align: center;">04 // TICKETS</h2>
+        <div class="ticket-grid">
+            <div class="ticket-card"><h3>STANDARD</h3><div class="price">€89</div><a href="#" class="btn">SECURE ACCESS</a></div>
+            <div class="ticket-card" style="border-color: var(--primary);"><h3>BUSINESS</h3><div class="price">€189</div><a href="#" class="btn" style="background: var(--primary); color: #fff;">SECURE ACCESS</a></div>
+            <div class="ticket-card"><h3>STUDENT</h3><div class="price">€39</div><a href="#" class="btn">SECURE ACCESS</a></div>
+        </div>
+    </section>
+
+    <section id="organizer">
+        <div class="org-section">
+            <img src="shuleyashar.png" alt="Shule Yashar" class="org-img">
+            <div>
+                <h2 style="font-size: 32px; font-weight: 800; margin-bottom: 20px;">Shule Yashar</h2>
+                <p style="color: #94a3b8; line-height: 1.8; max-width: 600px;">
+                    Основател на Tech Club "BitFlame" и стратегически архитект на Tech Bridge. С над 7 години опит в управлението на мащабни проекти за лидери като Google и Walmart, тя е визионерът зад обединяването на българската и световната тех екосистема.
+                </p>
+                <br>
+                <a href="https://linkedin.com" class="btn" style="background: transparent; border: 1px solid var(--border); color: #fff;">LinkedIn Profile</a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const lenis = new Lenis({ duration: 1.5 });
+        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+        requestAnimationFrame(raf);
+
+        const canvas = document.getElementById('dna-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        function init() {
+            canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+            particles = [];
+            for (let i = 0; i < 80; i++) particles.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, sx: (Math.random()-0.5)*0.2, sy: (Math.random()-0.5)*0.2 });
+        }
+        function anim() {
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+            particles.forEach((p, i) => {
+                p.x += p.sx; p.y += p.sy;
+                if (p.x > canvas.width) p.x=0; if (p.y > canvas.height) p.y=0;
+                particles.slice(i+1).forEach(p2 => {
+                    let d = Math.hypot(p.x-p2.x, p.y-p2.y);
+                    if (d < 120) { ctx.strokeStyle = `rgba(180,210,255,${0.15*(1-d/120)})`; ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(p2.x,p2.y); ctx.stroke(); }
+                });
+            });
+            requestAnimationFrame(anim);
+        }
+        init(); anim();
+
+        // 4 CATEGORIES ROTATION + ARROWS
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.cat-slide');
+        
+        function showSlide(index) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (index + slides.length) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+
+        function moveSlide(step) {
+            clearInterval(autoRotate); // Спира авто-въртенето при клик
+            showSlide(currentSlide + step);
+        }
+
+        let autoRotate = setInterval(() => {
+            showSlide(currentSlide + 1);
+        }, 5000);
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add('active'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('section').forEach(s => observer.observe(s));
+    </script>
+</body>
+</html>
