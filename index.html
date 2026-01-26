@@ -428,13 +428,19 @@ width:100%;
 .ticket-card:hover::after { left: 100%; }
 
 .ticket-card:hover {
-    transform: translateY(-10px) scale(1.02);
-    border-color: var(--secondary);
+    transform: translateY(-10px);
+    border-color: var(--secondary) !important;
     box-shadow: 0 20px 40px rgba(0,0,0,0.6);
 }
 
 .btn {
     transition: all 0.3s ease !important;
+}
+
+        /* Добави това веднага под .btn { ... } */
+.btn:hover {
+    transform: scale(1.05);
+    filter: brightness(1.2);
 }
 
 /* VIP Дизайн */
@@ -965,19 +971,11 @@ width:100%;
             </div>
         </div>
 
-        <div class="org-btns">
-            <a href="https://www.linkedin.com/in/shule-yashar-3b373a178/" target="_blank" class="btn" style="background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: #fff;"
-               onmouseover="this.style.transform='translateY(-3px)'; this.style.background='rgba(255,255,255,0.1)';" 
-   onmouseout="this.style.transform='translateY(0)'; this.style.background='rgba(255,255,255,0.05)';" >
-                <i class="fab fa-linkedin" style="margin-right: 8px;"></i> LinkedIn
-            </a>
-            <a href="https://linktr.ee/yourlink" target="_blank" class="btn btn-linktree"
-                style="transition: 0.3s;"
-   onmouseover="this.style.transform='scale(1.05) translateY(-2px)'; this.style.filter='brightness(1.2)';" 
-   onmouseout="this.style.transform='scale(1) translateY(0)'; this.style.filter='brightness(1)';" >
-                <i class="fas fa-certificate" style="margin-right: 8px;"></i> Get in touch
-            </a>
-        </div>
+     <div class="org-btns">
+    <a href="https://www.linkedin.com/in/shule-ramadan" target="_blank" class="btn">
+        <i class="fab fa-linkedin"></i> LinkedIn
+    </a>
+</div>
     </div>
 </section>
 
@@ -1068,6 +1066,7 @@ width:100%;
 </body>
 
 </html>
+
 
 
 
