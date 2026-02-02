@@ -915,188 +915,177 @@ video.hero-video {
         white-space: nowrap; /* Да не се пренася на нов ред */
     }
 }
-       /* ============================================================
-   TICKETS SECTION - FULL HIGH-TECH DESIGN
-   ============================================================ */
-
-.ticket-grid { 
-    display: grid; 
-    grid-template-columns: repeat(3, 1fr); 
-    gap: 25px; 
-    margin-top: 50px; 
+  /* --- TICKETS SECTION --- */
+#tickets {
+    padding: 100px 20px;
+    background: #020617;
+    text-align: center;
 }
 
-/* Контейнер за втория ред */
+#tickets h2 {
+    font-size: 3rem;
+    letter-spacing: 5px;
+    margin-bottom: 50px;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.ticket-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
 .last-row {
-    grid-column: 1 / -1; 
     display: flex;
     justify-content: center;
-    gap: 25px;
-    margin-top: 25px;
+    gap: 30px;
+    margin-top: 30px;
 }
 
-.ticket-card { 
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
-    background: rgba(255, 255, 255, 0.02); 
-    border: 1px solid rgba(255, 255, 255, 0.1); 
-    padding: 50px 30px; 
-    border-radius: 30px; 
-    text-align: center; 
-    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-    position: relative;
-    overflow: hidden;
+.ticket-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 50px 30px;
+    border-radius: 30px;
+    text-align: center;
+    transition: all 0.3s ease;
     backdrop-filter: blur(15px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
-
-/* Сканиращ светлинен ефект при hover */
-.ticket-card::after {
-    content: '';
-    position: absolute;
-    top: -50%; left: -150%;
-    width: 200%; height: 200%;
-    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.08), transparent);
-    transform: translateY(-10px);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-    transition: 0.8s;
-}
-
-.ticket-card:hover::after { left: 100%; }
 
 .ticket-card:hover {
-    transform: translateY(-15px) scale(1.02) !important;     
-    border-color: var(--secondary) !important;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+    transform: translateY(-10px);
+    border-color: var(--secondary);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
 }
 
+/* БУТОНИ */
 .btn {
-    display: inline-flex !important;
-    align-items: center;
-    justify-content: center;
-    padding: 15px 35px !important;
-    border-radius: 50px !important;
-    font-size: 13px !important;
-    font-weight: 800 !important;
-    text-transform: uppercase !important;
-    letter-spacing: 1px !important;
-    text-decoration: none !important;
-    transition: all 0.3s ease !important;
-    min-width: 200px !important; 
-    background: var(--primary) !important; 
+    background: var(--primary) !important;
     color: white !important;
-    border: none !important;
+    padding: 15px 30px !important;
+    border-radius: 50px !important;
+    font-weight: 800;
+    font-size: 13px;
+    text-transform: uppercase;
+    text-decoration: none !important;
+    min-width: 200px;
+    display: inline-block;
+    transition: 0.3s;
+    cursor: pointer;
 }
 
 .btn:hover {
-    transform: scale(1.05) translateY(-3px) !important;
-    filter: brightness(1.2) !important;
-    background: var(--secondary) !important; 
-    box-shadow: 0 10px 25px rgba(6, 182, 212, 0.4) !important;
+    background: var(--secondary) !important;
+    transform: scale(1.05);
 }
 
-/* VIP Дизайн */
+/* ПРОМОКОД ЛИНК - ПОД БУТОНА */
+.promo-link {
+    margin-top: 15px !important;
+    font-size: 11px;
+    color: var(--secondary);
+    cursor: pointer;
+    font-weight: 700;
+    text-transform: uppercase;
+    opacity: 0.7;
+    transition: 0.3s;
+}
+
+.promo-link:hover {
+    opacity: 1;
+    text-decoration: underline;
+}
+
+/* VIP & CORP SPECIFICS */
 .vip-card {
     border: 2px solid transparent;
     background: linear-gradient(#020617, #020617) padding-box,
                 linear-gradient(135deg, #6366f1, #06b6d4) border-box;
-    box-shadow: 0 0 30px rgba(99, 102, 241, 0.2);
     width: 420px;
 }
 
-.vip-card h3 { color: #fff; font-weight: 800; text-shadow: 0 0 10px rgba(99, 102, 241, 0.5); }
-
-/* Corporate Дизайн */
 .corp-card {
     border: 1px dashed var(--secondary);
     width: 420px;
 }
 
-.ticket-card ul { list-style: none; padding: 0; margin: 25px 0; }
-.ticket-card li { font-size: 12px; color: #94a3b8; margin: 12px 0; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.ticket-card ul { list-style: none; padding: 0; margin: 25px 0; width: 100%; }
+.ticket-card li { font-size: 12px; color: #94a3b8; margin: 10px 0; display: flex; align-items: center; justify-content: center; gap: 8px; }
 .ticket-card li i { color: var(--secondary); font-size: 10px; }
 
-/* Дизайн за промо кода под бутона */
-.ticket-card div[onclick^="openBooking"] {
-    display: inline-block;
-    padding: 6px 12px;
-    border-radius: 6px;
-    background: rgba(34, 211, 238, 0.03);
-    border: 1px solid rgba(34, 211, 238, 0.1);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    cursor: pointer;
-    font-size: 11px;
-    color: var(--secondary);
+/* --- ФИКС ЗА ИНПУТИТЕ ВЪВ ФУТЪРА --- */
+/* Крием всичко, което е избягало извън картите */
+#tickets + input, 
+#tickets + button,
+#tickets + div:not(.ticket-grid):not(.last-row),
+footer input, 
+footer button#payment-button {
+    display: none !important;
+    visibility: hidden !important;
 }
 
-.ticket-card div[onclick^="openBooking"]:hover {
-    color: #fff !important;
-    background: rgba(34, 211, 238, 0.15);
+/* МОДАЛЪТ СЕ СКРИВА И СЕ ПРАВИ FIXED */
+.modal-overlay {
+    display: none; /* Крие го от футъра */
+    position: fixed; /* Отлепя го от дъното на сайта */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(2, 6, 23, 0.95); /* Тъмен фон */
+    z-index: 99999; /* Да е над всичко */
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+}
+
+.modal-content {
+    background: #0f172a;
+    padding: 40px;
+    border-radius: 25px;
+    border: 1px solid var(--secondary);
+    width: 90%;
+    max-width: 400px;
+    position: relative;
+    text-align: center;
+    box-shadow: 0 0 50px rgba(6, 182, 212, 0.2);
+}
+
+.modal-content input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    color: white;
+    outline: none;
+}
+
+.modal-content input:focus {
     border-color: var(--secondary);
-    box-shadow: 0 0 15px rgba(34, 211, 238, 0.2);
-    transform: translateY(-1px);
 }
 
-/* ============================================================
-   FINAL MOBILE OPTIMIZATION (THE "SLIM" FIX)
-   ============================================================ */
-
+/* МОБИЛНА ВЕРСИЯ */
 @media (max-width: 768px) {
-    /* Наместваме грида в една колона */
     .ticket-grid, .last-row {
         display: flex !important;
         flex-direction: column !important;
         align-items: center !important;
-        gap: 15px !important;
-        margin-top: 30px !important;
-        padding: 0 15px !important;
+        gap: 20px !important;
     }
-
-    /* Правим картите малки и премахваме фиксираните ширини */
     .ticket-card, .vip-card, .corp-card {
         width: 100% !important;
-        max-width: 300px !important; /* Намаляваме ги визуално */
-        padding: 20px !important; /* Свиваме празното пространство */
-        min-height: auto !important;
-        height: auto !important;
-        border-radius: 20px !important;
-        transform: none !important; /* Махаме отместването на мобилен */
-    }
-
-    /* Компактни текстове */
-    .ticket-card h3 {
-        font-size: 1.1rem !important;
-        margin-bottom: 5px !important;
-    }
-
-    .ticket-card .price {
-        font-size: 1.6rem !important;
-        margin-bottom: 10px !important;
-    }
-
-    .ticket-card ul {
-        margin: 10px 0 !important;
-    }
-
-    .ticket-card li {
-        font-size: 11px !important;
-        margin: 5px 0 !important;
-    }
-
-    /* Малък бутон */
-    .btn {
-        min-width: 100% !important;
-        padding: 10px 20px !important;
-        font-size: 12px !important;
-    }
-
-    /* Линка за промо код */
-    .ticket-card div[onclick^="openBooking"] {
-        font-size: 9px !important;
-        margin-top: 10px !important;
+        max-width: 300px !important;
+        padding: 30px 20px !important;
     }
 }
-
 /* --- ORGANIZER SECTION (DESKTOP) --- */
 .org-section { 
     display: flex; 
@@ -1819,8 +1808,8 @@ footer { padding: 50px 5%; border-top: 1px solid rgba(255,255,255,0.05); text-al
     </div>
 </section>
 
-     <section id="tickets">
-    <h2">TICKETS</h2>
+<section id="tickets">
+    <h2>TICKETS</h2>
     
     <div class="ticket-grid">
         <div class="ticket-card">
@@ -1830,64 +1819,57 @@ footer { padding: 50px 5%; border-top: 1px solid rgba(255,255,255,0.05); text-al
                 <li><i class="fas fa-check-circle"></i> Full Event Access</li>
                 <li><i class="fas fa-check-circle"></i> Cocktail Zone</li>
             </ul>
-            <a href="https://checkout.revolut.com/pay/39b40c31-99cc-4afc-b4f8-679289c2383d " class="btn">Secure Access</a>
+            <a href="https://checkout.revolut.com/pay/39b40c31-99cc-4afc-b4f8-679289c2383d" class="btn">Secure Access</a>
         </div>
 
-<div class="ticket-card">
-    <h3>STANDARD</h3>
-    <div class="price">60€</div>
-    <ul>
-        <li><i class="fas fa-check-circle"></i> Full Event Access</li>
-        <li><i class="fas fa-check-circle"></i> Cocktail Zone</li>
-    </ul>
-    <a href="https://checkout.revolut.com/pay/99c33593-bc68-4967-9389-ffe850206f96" class="btn">Secure Access</a>
-    
-    <div onclick="openBooking('standard')">I have a promo code</div>
-</div>
+        <div class="ticket-card">
+            <h3>STANDARD</h3>
+            <div class="price">60€</div>
+            <ul>
+                <li><i class="fas fa-check-circle"></i> Full Event Access</li>
+                <li><i class="fas fa-check-circle"></i> Cocktail Zone</li>
+            </ul>
+            <a href="https://checkout.revolut.com/pay/99c33593-bc68-4967-9389-ffe850206f96" class="btn">Secure Access</a>
+            <div class="promo-link" onclick="openBooking('standard')">I have a promo code</div>
+        </div>
 
-<div class="ticket-card">
-    <h3>ONLINE</h3>
-    <div class="price">10€</div>
-    <ul>
-        <li><i class="fas fa-check-circle"></i> HIGH QUALITY LIVE STREAM</li>
-    </ul>
-    <a href="https://checkout.revolut.com/pay/2b21f854-a930-4e3b-af9c-ad46a5ef0611" class="btn">Secure Access</a>
-</div>
-
-<div class="last-row">
-    <div class="ticket-card vip-card">
-        <div>MOST EXCLUSIVE</div>
-        <h3>VIP LUXURY</h3>
-        <div class="price">125€</div>
-    <ul>
-
-                    <li><i class="fas fa-comment-dots"></i> <b>EVERYTHING IN STANDARD</b></li>
-
-                    <li><i class="fas fa-glass-cheers"></i> <b>COCKTAIL ZONE</b></li>
-
-                    <li><i class="fas fa-crown"></i> <b>FRONT ROW RESERVED</b></li>
-
-<li><i class="fas fa-crown"></i> <b>VIP LOUNGE WITH THE SPEAKERS</b></li>
-
-                </ul>
-
-
-        <a href="https://checkout.revolut.com/pay/5489172e-0d78-48e5-93e8-18563e1c4b45" class="btn">BECOME A VIP</a>
-        
-        <div onclick="openBooking('gold')">I have a promo code</div>
+        <div class="ticket-card">
+            <h3>ONLINE</h3>
+            <div class="price">10€</div>
+            <ul>
+                <li><i class="fas fa-check-circle"></i> HIGH QUALITY LIVE STREAM</li>
+            </ul>
+            <a href="https://checkout.revolut.com/pay/2b21f854-a930-4e3b-af9c-ad46a5ef0611" class="btn">Secure Access</a>
+        </div>
     </div>
-            <div class="ticket-card corp-card">
-                <div>BUNDLE OFFER</div>
-                <h3>CORPORATE</h3>
-                <div class="price">€250</div>
-                <ul>
-                    <li><i class="fas fa-users"></i> ACCESS FOR 5 </li>
-                </ul>
-                <a href="https://checkout.revolut.com/pay/d53e5781-3efa-420f-b305-cc4c64e5015b " class="btn">Secure Bundle</a>
-            </div>
+
+    <div class="last-row">
+        <div class="ticket-card vip-card">
+            <div class="exclusive-tag" style="font-size: 10px; color: var(--secondary); margin-bottom: 5px; font-weight: 800; letter-spacing: 1px;">MOST EXCLUSIVE</div>
+            <h3>VIP LUXURY</h3>
+            <div class="price">125€</div>
+            <ul>
+                <li><i class="fas fa-comment-dots"></i> <b>EVERYTHING IN STANDARD</b></li>
+                <li><i class="fas fa-glass-cheers"></i> <b>COCKTAIL ZONE</b></li>
+                <li><i class="fas fa-crown"></i> <b>FRONT ROW RESERVED</b></li>
+                <li><i class="fas fa-crown"></i> <b>VIP LOUNGE WITH THE SPEAKERS</b></li>
+            </ul>
+            <a href="https://checkout.revolut.com/pay/5489172e-0d78-48e5-93e8-18563e1c4b45" class="btn">BECOME A VIP</a>
+            <div class="promo-link" onclick="openBooking('gold')">I have a promo code</div>
+        </div>
+
+        <div class="ticket-card corp-card">
+            <div class="exclusive-tag" style="font-size: 10px; color: var(--secondary); margin-bottom: 5px; font-weight: 800; letter-spacing: 1px;">BUNDLE OFFER</div>
+            <h3>CORPORATE</h3>
+            <div class="price">€250</div>
+            <ul>
+                <li><i class="fas fa-users"></i> ACCESS FOR 5</li>
+            </ul>
+            <a href="https://checkout.revolut.com/pay/d53e5781-3efa-420f-b305-cc4c64e5015b" class="btn">Secure Bundle</a>
         </div>
     </div>
 </section>
+
 <section id="partners" class="partners-hitech-section">
     <h2">PARTNERS & SPONSORS</h2>
     
@@ -2113,75 +2095,44 @@ footer { padding: 50px 5%; border-top: 1px solid rgba(255,255,255,0.05); text-al
         <a href="#" style="color: #64748b; margin: 0 10px;">Terms of Service</a>
     </div>
 </footer>
-<div id="bookingModal" class="modal-overlay">
-    <div class="modal-content">
-        <span onclick="closeBooking()" style="position:absolute; right:20px; top:10px; cursor:pointer; font-size:24px;">&times;</span>
-        <h3 style="margin-top:0; color:var(--secondary);">Get Your Ticket</h3>
-        
-        <input type="text" id="userName" placeholder="Company">
-        <input type="text" id="promoCode" placeholder="Promo Code">
-        
-        <button onclick="finalizePayment()" class="btn" style="width:100%; margin-top:15px; cursor:pointer; border:none;">Payment</button>
-    </div>
-</div>
 <script>
 /** * 1. ГЛОБАЛНИ ПРОМЕНЛИВИ И ЛИНКОВЕ 
  */
-let selectedTier = '';
-const links = {
-    'standard': 'https://checkout.revolut.com/pay/99c33593-bc68-4967-9389-ffe850206f96',
-    'standard_viber': 'https://checkout.revolut.com/pay/a82be3a5-5773-4cba-b429-e10e881ada05',
-    'gold': 'https://checkout.revolut.com/pay/5489172e-0d78-48e5-93e8-18563e1c4b45',
-    'gold_viber': 'https://checkout.revolut.com/pay/88b6a24e-a75b-487c-b934-29eeb47e45df'
-};
-
-/** * 2. ФУНКЦИИ ЗА БИЛЕТИ И МОДАЛЕН ПРОЗОРЕЦ 
- */
+// Тези функции трябва да са в тага <script>
 function openBooking(tier) {
-    selectedTier = tier;
-    const modal = document.getElementById('bookingModal');
-    if (modal) {
-        modal.style.display = 'flex';
-    } else {
-        console.error("Грешка: Не намерих елемент с id='bookingModal'");
-    }
+    selectedTier = tier; // Запазваме кой билет е избран
+    document.getElementById('bookingModal').style.display = 'flex';
 }
 
 function closeBooking() {
-    const modal = document.getElementById('bookingModal');
-    if (modal) modal.style.display = 'none';
-    // Изчистване на полетата
-    const inputName = document.getElementById('userName');
-    const inputPromo = document.getElementById('promoCode');
-    if (inputName) inputName.value = '';
-    if (inputPromo) inputPromo.value = '';
+    document.getElementById('bookingModal').style.display = 'none';
 }
 
 function finalizePayment() {
-    const nameInput = document.getElementById('userName');
-    const promoInput = document.getElementById('promoCode');
+    const name = document.getElementById('userName').value.trim();
+    const code = document.getElementById('promoCode').value.trim().toUpperCase();
     
-    const name = nameInput ? nameInput.value.trim() : "";
-    const code = promoInput ? promoInput.value.trim().toUpperCase() : "";
-
-    if (!name) {
-        alert("Please enter Company Name or Your Name.");
+    if(!name) {
+        alert("Please enter your name.");
         return;
     }
 
+    // Линковете от твоя код
+    const links = {
+        'standard': 'https://checkout.revolut.com/pay/99c33593-bc68-4967-9389-ffe850206f96',
+        'standard_viber': 'https://checkout.revolut.com/pay/a82be3a5-5773-4cba-b429-e10e881ada05',
+        'gold': 'https://checkout.revolut.com/pay/5489172e-0d78-48e5-93e8-18563e1c4b45',
+        'gold_viber': 'https://checkout.revolut.com/pay/88b6a24e-a75b-487c-b934-29eeb47e45df'
+    };
+
     let targetLink = links[selectedTier];
 
-    // Логика за промо кода VIBER10
     if (code === 'VIBER10') {
         if (selectedTier === 'standard') targetLink = links['standard_viber'];
         else if (selectedTier === 'gold') targetLink = links['gold_viber'];
     }
 
-    if (targetLink) {
-        window.location.href = targetLink;
-    } else {
-        alert("Error: Link not found.");
-    }
+    window.location.href = targetLink;
 }
 
 /** * 3. ФУНКЦИИ ЗА КАРТАТА И ПАРТНЬОРИТЕ 
@@ -2321,6 +2272,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 </script>
+<div id="bookingModal" class="modal-overlay" style="display: none;">
+    <div class="modal-content">
+        <span onclick="closeBooking()" style="position: absolute; top: 15px; right: 20px; color: #fff; font-size: 24px; cursor: pointer;">&times;</span>
+        <h3 style="color: #fff; margin-bottom: 10px;">PROMO CODE ACCESS</h3>
+        <p style="color: #94a3b8; font-size: 13px; margin-bottom: 20px;">Enter your details to proceed</p>
+        
+        <input type="text" id="userName" placeholder="Your Name or Company">
+        <input type="text" id="promoCode" placeholder="Promo Code">
+        
+        <button onclick="finalizePayment()" class="btn" style="width: 100%; border: none; cursor: pointer; margin-top: 10px;">
+            PROCEED TO PAYMENT
+        </button>
+    </div>
+</div>
 </body>
 </html>
 
