@@ -69,7 +69,6 @@ html {
     backdrop-filter: blur(15px); /* Модерен стъклен ефект */
     border-bottom: 1px solid var(--border);
         }
-       /* Контейнерът на самото лого */
 .navbar-logo {
     height: 80px; /* Тук променяш размера - например от 40px на 80px */
     width: auto;
@@ -110,6 +109,51 @@ nav a::after {
         section { position: relative; z-index: 10; padding: 120px 10%; opacity: 0; transform: translateY(40px); transition: 1.5s cubic-bezier(0.19, 1, 0.22, 1); }
         section.active { opacity: 1; transform: translateY(0); }
 
+     @media (max-width: 1024px) {
+    /* 1. Скриваме бутона */
+    .nav-sponsor { display: none !important; }
+
+    /* 2. Подреждаме навбара */
+    nav {
+        justify-content: space-between;
+        padding: 0 20px;
+        height: 80px;
+    }
+
+    /* 3. СКРИВАМЕ линковете и ги подготвяме за падащо меню */
+    .nav-links {
+        display: none; /* Първоначално са скрити */
+        position: absolute;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        flex-direction: column; /* Един под друг */
+        background: rgba(2, 6, 23, 0.95);
+        padding: 20px 0;
+        text-align: center;
+        gap: 20px;
+    }
+
+    /* 4. Когато добавим клас .active чрез JS, се показват */
+    .nav-links.active {
+        display: flex !important;
+    }
+
+    /* 5. Правим бургер иконата видима */
+    .menu-toggle {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+    }
+
+    .menu-toggle .bar {
+        width: 25px;
+        height: 3px;
+        background: white;
+        display: block;
+    }
+}
         /* HERO */
 
 .hero-clean {
@@ -323,150 +367,27 @@ video.hero-video {
 /* Намаляваме разстоянието до съседната секция */
 .scarcity-box { margin-bottom: -20px; }
 
-/* AGENDA STYLES */
-
-.event-row {
-    display: flex;
-    background: rgba(255, 255, 255, 0.03);
-    border-radius: 12px;
-    padding: 20px;
-    margin-bottom: 15px;
-    transition: all 0.3s ease;
-}
-
-.event-row:hover {
-    background: rgba(255, 255, 255, 0.07);
-    transform: translateX(10px);
-}
-
-.event-row.highlight {
-    border-left: 4px solid var(--primary);
-    background: rgba(99, 102, 241, 0.08);
-}
-
-.event-time {
-    flex: 0 0 120px;
-    font-weight: 700;
-    color: var(--secondary);
-    font-size: 14px;
-}
-
-.event-details h4 {
-    margin: 0 0 8px 0;
-    font-size: 18px;
-    color: #fff;
-}
-
-.speakers {
-    font-size: 60px;
-    color: var(--primary);
-    font-weight: 800;
-    letter-spacing: -2px;
-    line-height:1.1;
-    margin-bottom: 8px;
-}
-
-.event-details p {
-    margin: 0;
-    font-size: 14px;
-    color: #94a3b8;
-    line-height: 1.5;
-}
-
-.talent-pitch {
-    background: rgba(234, 179, 8, 0.05);
-    border: 1px solid rgba(234, 179, 8, 0.2);
-}
-
-@media (max-width: 600px) {
-    .event-row {
-        flex-direction: column;
-    }
-    .event-time {
-        margin-bottom: 10px;
-    }
-}
-/* FAQ STYLES */
-.faq-section { padding: 80px 5%; background: rgba(0,0,0,0.2); }
-.faq-grid { max-width: 800px; margin: 40px auto; display: grid; gap: 15px; }
-.faq-container { max-width: 800px; margin: 0 auto; }
-
-
-/* FAQ STYLES - HOVER VERSION */
-.faq-item {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 12px;
-    margin-bottom: 10px;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    overflow: hidden; /* Задължително за плавния ефект */
-    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* Ефект при посочване на целия елемент */
-.faq-item:hover {
-    border-color: var(--secondary);
-    background: rgba(255, 255, 255, 0.07);
-    transform: translateY(-2px); /* Леко повдигане */
-}
-
-.faq-header {
-    padding: 18px 25px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.faq-content {
-    max-height: 0;
-    opacity: 0;
-    /* Премахваме visibility, за да не "спъва" старта */
-    overflow: hidden;
-    /* Използваме ease-in-out за по-бавно тръгване */
-transition: max-height 1.8s cubic-bezier(0.33, 1, 0.68, 1), opacity 1.5s ease-in-out;}
-
-.faq-item:hover .faq-content {
-    max-height: 120px; /* Дръж го близо до височината на текста */
-    opacity: 1;
-    /* Тук също трябва да е същата крива за плавно връщане */
-transition: max-height 1.8s cubic-bezier(0.33, 1, 0.68, 1), opacity 1.5s ease-in-out;}
-/* Ротация на иконата при Hover */
-.faq-item:hover .faq-icon {
-    transform: rotate(45deg);
-    color: var(--primary);
-}
-
-.faq-content p {
-    padding: 0 25px 20px 25px;
-    margin: 0;
-    color: #94a3b8;
-    font-size: 14px;
-    line-height: 1.6;
-}
-
-/* SPEAKERS CATEGORIES */
+/* --- SPEAKERS CATEGORIES (DESKTOP) --- */
 
 .sp-grid { 
     display: grid; 
     grid-template-columns: repeat(4, 1fr); 
     gap: 25px; 
     margin-top: 50px;
-
-/* ДОБАВИ ТЕЗИ ТРИ РЕДА: */
-    max-width: 1350px; /* Ограничава ширината на цялата секция */
-    margin-left: auto;  /* Центрира грида */
-    margin-right: auto; /* Центрира грида */
-        align-items: start;
+    max-width: 1350px; 
+    margin-left: auto;  
+    margin-right: auto; 
+    align-items: start;
 }
 
-/* Карта на лектора */
 .sp-card { 
-    background: #0f172a; /* По-плътно синьо вместо прозрачност */
+    background: #0f172a; 
     border: 1px solid var(--border);
-    border-radius: 8px; /* По-малки ъгли за „бизнес“ усещане */
+    border-radius: 8px; 
     overflow: hidden; 
     transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
     position: relative;
+    width: 100%; /* Гарантира, че няма да излиза от грида */
 }
 
 .sp-card:hover {
@@ -475,7 +396,6 @@ transition: max-height 1.8s cubic-bezier(0.33, 1, 0.68, 1), opacity 1.5s ease-in
     transform: translateY(-5px);
 }
 
-/* Снимка с мащабиране */
 .sp-img-container {
     width: 100%;
     aspect-ratio: 1/1;
@@ -484,21 +404,20 @@ transition: max-height 1.8s cubic-bezier(0.33, 1, 0.68, 1), opacity 1.5s ease-in
 }
 
 .sp-card img { 
-    filter: grayscale(1) contrast(1.1); /* Черно-бели снимки за унифициран вид */
+    filter: grayscale(1) contrast(1.1); 
     opacity: 0.8;
     width: 100%; 
     height: 100%;
     object-fit: cover; 
-    object-position: top; /* Фокусира се върху горната част на снимката */
+    object-position: top; 
     transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1), filter 0.5s ease;
 }
 
 .sp-card:hover img { 
-filter: grayscale(0) contrast(1); /* Цветни при посочване */
+    filter: grayscale(0) contrast(1); 
     opacity: 1;
 }
 
-/* Инфо панел */
 .sp-info { 
     padding: 20px; 
     background: #020617;
@@ -513,7 +432,6 @@ filter: grayscale(0) contrast(1); /* Цветни при посочване */
 .sp-info .role { color: #e1e5ea; font-size: 14px; display: block; margin-bottom: 4px; }
 .sp-info .company { color: var(--secondary); font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
 
-/* LinkedIn Бутон - High-Tech динамика */
 .sp-social-link { 
     color: rgba(255, 255, 255, 0.3); 
     font-size: 26px; 
@@ -548,7 +466,79 @@ filter: grayscale(0) contrast(1); /* Цветни при посочване */
     50% { transform: scale(1.1); opacity: 1; }
     100% { transform: scale(1); opacity: 0.8; }
 }
-/* PROGRAM SECTION */
+
+@media (max-width: 768px) {
+    /* 1. ГРИД: Правим редовете със строго дефинирана височина */
+    .sp-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        grid-auto-rows: 1fr; /* Всички карти на един ред ще са високи колкото най-високата */
+        gap: 15px !important;
+        padding: 0 15px !important;
+        align-items: stretch !important; /* Форсира разтягане до еднаква височина */
+    }
+
+    /* 2. КАРТАТА: Правим я Flex контейнер, за да разтеглим инфото */
+    .sp-card {
+        display: flex !important;
+        flex-direction: column !important;
+        height: 100% !important; /* Заема цялата височина на грид клетката */
+        background: #0f172a;
+    }
+
+    /* 3. СНИМКАТА: Фиксиран квадрат */
+    .sp-img-container {
+        width: 100% !important;
+        aspect-ratio: 1 / 1 !important;
+        flex-shrink: 0; /* Пречи на снимката да се смачква */
+    }
+
+    /* 4. ИНФОТО: Тук е ключът към еднаквото дъно */
+    .sp-info {
+        padding: 12px !important;
+        flex-grow: 1; /* РАЗТЯГА инфото до дъното на картата */
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between; /* Името горе, компанията/иконата долу */
+        background: #020617 !important;
+    }
+
+    .sp-text {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .sp-info h4 { 
+        font-size: 13px !important; 
+        line-height: 1.2 !important;
+        margin-bottom: 4px !important;
+        /* Премахваме min-height, flex-grow ще свърши работата */
+    }
+
+    .sp-info .role { 
+        font-size: 10px !important; 
+        margin-bottom: auto; /* Бута всичко под ролята към дъното */
+        padding-bottom: 10px;
+    }
+
+    .sp-info .company { 
+        font-size: 9px !important; 
+        margin-top: 5px;
+    }
+
+    /* Социалната икона - фиксирана в ъгъла */
+    .sp-social-link {
+        position: absolute;
+        bottom: 12px;
+        right: 12px;
+        font-size: 18px !important;
+        margin: 0 !important;
+    }
+}
+/* ============================================================
+   AGENDA SECTION - ORIGINAL + MOBILE FIX
+   ============================================================ */
 
 .agenda-section {
     padding: 100px 20px;
@@ -605,7 +595,7 @@ filter: grayscale(0) contrast(1); /* Цветни при посочване */
     padding-right: 20px;
 }
 
-/* Event Item - Universal Fix */
+/* Event Item */
 .event-item {
     position: relative;
     background: rgba(255, 255, 255, 0.02);
@@ -619,7 +609,6 @@ filter: grayscale(0) contrast(1); /* Цветни при посочване */
     gap: 8px;
 }
 
-/* Подсигуряваме, че времето винаги изглежда добре, независимо от тага */
 .event-item .time, 
 .event-item .event-time {
     font-family: monospace;
@@ -634,7 +623,6 @@ filter: grayscale(0) contrast(1); /* Цветни при посочване */
     transform: translateX(10px);
 }
 
-/* Точката на таймлайна */
 .event-item::before {
     content: '';
     position: absolute;
@@ -649,58 +637,35 @@ filter: grayscale(0) contrast(1); /* Цветни при посочване */
     z-index: 2;
 }
 
-/* --- ПРОМЯНА: ФОКУС ВЪРХУ ТЕМАТА --- */
 .topic {
-    color: #fff; /* Темата вече е бяла и на фокус */
-    font-size: 1.15rem; /* По-голям шрифт */
+    color: #fff;
+    font-size: 1.15rem;
     font-weight: 700;
     margin: 0;
     line-height: 1.3;
-    order: 1; /* Визуално излиза нагоре, ако структурата позволява */
 }
 
-/* --- ПРОМЯНА: ИМЕТО НА ЛЕКТОРА НА ЗАДЕН ПЛАН --- */
 .speaker {
-    font-size: 0.85rem; /* По-малък шрифт */
+    font-size: 0.85rem;
     font-weight: 400;
-    color: var(--text-dim); /* Сивкав цвят, не на фокус */
+    color: var(--text-dim);
     margin: 0;
-    order: 2;
 }
 
 .speaker span {
-    color: var(--primary); /* Организацията остава с лек цветен акцент */
+    color: var(--primary);
     font-weight: 400;
     font-size: 0.8rem;
 }
 
-/* Специфични стилове */
 .event-item.featured { border-left: 3px solid var(--secondary); }
 
-/* --- ПРОМЯНА: НЕИЗВЕСТНИТЕ (Mystery) --- */
 .event-item.mystery { 
-    border-left: 3px solid #a750d3; /* Тъмно червено */
-    background: linear-gradient(90deg, rgba(127, 29, 29, 0.1), transparent);
+    border-left: 3px solid #a750d3; 
+    background: linear-gradient(90deg, rgba(164, 80, 211, 0.1), transparent);
 }
-.event-item.mystery .topic { color: #623568; } /* Темата им леко розовее */
+.event-item.mystery .topic { color: #d8b4fe; }
 
-/* --- ПРОМЯНА: КРИС ПАРТНЪСКА (Махнато червено) --- */
-.event-item.alert { 
-    border-left: 1px solid rgba(255, 255, 255, 0.05); /* Като нормален айтем */
-    background: rgba(255, 255, 255, 0.02);
-}
-
-.online-status {
-    font-size: 0.6rem;
-    background: #ef4444; /* Запазено червено за LIVE статуса на Алина */
-    color: white;
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-weight: 800;
-    margin-left: 10px;
-}
-
-/* Break Bar */
 .break-bar {
     margin: 30px 0;
     padding: 12px;
@@ -712,7 +677,6 @@ filter: grayscale(0) contrast(1); /* Цветни при посочване */
     letter-spacing: 2px;
 }
 
-/* After Hours */
 .after-hours-card {
     margin-top: 50px;
     padding: 30px;
@@ -731,77 +695,68 @@ filter: grayscale(0) contrast(1); /* Цветни при посочване */
     white-space: nowrap;
 }
 
-@media (max-width: 600px) {
-    .after-hours-card { flex-direction: column; text-align: center; }
-    .timeline { margin-left: 10px; padding-left: 30px; }
+/* --- МОБИЛНА ВЕРСИЯ (ДОБАВКА) --- */
+@media (max-width: 768px) {
+    .agenda-section { padding: 60px 15px; }
+    
+    .timeline { 
+        margin-left: 5px; 
+        padding-left: 25px; 
+    }
+    
+    .group-label { 
+        margin-left: -25px; 
+        font-size: 0.65rem; 
+    }
+
+    .event-item::before { 
+        left: -30px; 
+        top: 22px; 
+    }
+
+    .topic { font-size: 1rem; }
+    
+    .after-hours-card { 
+        flex-direction: column; 
+        text-align: center; 
+        padding: 20px; 
+    }
+
+    .event-item:hover { transform: none; }
 }
 /* PARTNERS SECTION */
 .partners-hitech-section { 
-background-color: #020617; /* Тъмно синьо/черно */
-background-image: 
+    padding: 100px 10%; /* Добавяме отстояние */
+    background-color: #020617; 
+    background-image: 
         linear-gradient(rgba(6, 182, 212, 0.05) 1px, transparent 1px),
         linear-gradient(90deg, rgba(6, 182, 212, 0.05) 1px, transparent 1px);
-background-size: 40px 40px;
-position: relative;
-overflow: hidden;
-}
-.partner-logo-small, .partner-logo-big {
-filter: brightness(0) invert(1) opacity(0.5); /* Всички лога да са бели и леко прозрачни */
-max-height: 45px;
-}
-
-.sub-item:hover .partner-logo-small {
-    filter: brightness(0) invert(1) opacity(1); /* Стават напълно бели при ховър */
-}
-/* Основният контейнер за лентата */
-.marquee-wrapper {
-    width: 100%;
-    overflow: hidden;
-    padding: 60px 0;
+    background-size: 40px 40px;
     position: relative;
-    /* Леко затъмнение в краищата за по-мек преход */
-    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    overflow: hidden;
+    text-align: center;
 }
 
-/* Самата движеща се лента */
-.marquee-content {
- display: flex;
-    gap: 100px;
-    width: max-content;
-    /* Намали секундите за по-висока скорост: 
-       20s - бързо и енергично
-       15s - много агресивно (хай-тек темпо)
-       40s - (както беше досега) - пенсионерско темпо */
-    animation: scroll-marquee 20s linear infinite;
+/* Твоето H2 заглавие */
+#partners h2 {
+    font-size: 30px; 
+    font-weight: 800; 
+    letter-spacing: -3px; 
+    line-height: 1; 
+    text-align: center; 
+    color: #ffffff; 
+    margin-bottom: 60px;
 }
 
-/* Анимацията за движение */
-@keyframes scroll-marquee {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); } /* Движи се до половината, тъй като съдържанието е дублирано */
-}
-
-.marquee-wrapper:hover .marquee-content {
-    animation-play-state: paused;
-}
-
-.main-title {
-    font-size: 20px; 
-    letter-spacing: 8px; 
-    color: var(--secondary);
-    text-transform: uppercase; 
-    margin-bottom: 50px; 
-    font-weight: 800;
-    text-align: left; 
-    width: 100%;
-}
-
+/* Твоят стратегически етикет */
 .strategic-label {
-    font-size: 28px; 
-    font-weight: 900; 
-    color: #fff;
-    margin-bottom: 20px; 
-    display: block; 
+    font-size: 20px; /* Намален за елегантност */
+    font-weight: 800; 
+    letter-spacing: 5px; 
+    text-align: center; 
+    margin-bottom: 40px; 
+    color: #06b6d4;
+    display: block;
     text-transform: uppercase;
 }
 
@@ -809,7 +764,7 @@ max-height: 45px;
     display: flex; 
     justify-content: center; 
     gap: 80px;
-    margin-bottom: 30px; 
+    margin-bottom: 50px; 
     flex-wrap: wrap;
 }
 
@@ -821,7 +776,6 @@ max-height: 45px;
 
 .big-logo-item:hover { 
     transform: translateY(-10px) scale(1.05); 
-    filter: drop-shadow(0 0 15px var(--secondary)); 
 }
 
 .partner-logo-big {
@@ -829,22 +783,44 @@ max-height: 45px;
     width: auto; 
     display: block; 
     margin: 0 auto 10px;
-    filter: brightness(0) invert(1); 
+    filter: brightness(0) invert(1) opacity(0.7); 
     transition: 0.5s;
 }
 
 .big-logo-item:hover .partner-logo-big { 
-    filter: brightness(1) invert(0); 
+    filter: brightness(1) invert(0) drop-shadow(0 0 15px var(--secondary)); 
+    opacity: 1;
 }
 
 .big-logo-item span { 
-    font-size: 20px; 
+    font-size: 18px; 
     color: #ffffff; 
     letter-spacing: 2px; 
     text-transform: uppercase; 
+    font-weight: 700;
 }
 
 /* МАЛКИ ЛОГАТА В СЛАЙДЪРА */
+.marquee-wrapper {
+    width: 100%;
+    overflow: hidden;
+    padding: 60px 0;
+    position: relative;
+    mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+}
+
+.marquee-content {
+    display: flex;
+    gap: 100px;
+    width: max-content;
+    animation: scroll-marquee 20s linear infinite;
+}
+
+@keyframes scroll-marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
 .sub-item { 
     display: flex; 
     flex-direction: column; 
@@ -853,18 +829,19 @@ max-height: 45px;
 }
 
 .partner-logo-small { 
-    height: 50px; 
+    height: 45px; 
     width: auto; 
     margin-bottom: 10px; 
-    filter: grayscale(1) opacity(0.6); 
+    filter: brightness(0) invert(1) opacity(0.5); 
     transition: 0.3s; 
 }
 
 .sub-item:hover .partner-logo-small { 
-    filter: grayscale(0) opacity(1); 
+    filter: brightness(0) invert(1) opacity(1); 
     transform: scale(1.1); 
 }
 
+/* Текстовете в лентата */
 .p-name { 
     font-size: 18px; 
     font-weight: 800; 
@@ -874,14 +851,13 @@ max-height: 45px;
 }
 
 .p-tag { 
-    font-size: 14px; 
+    font-size: 16px; 
     color: #64748b; 
     letter-spacing: 1px; 
     margin-top: 3px; 
 }
 
 /* КИБЕР БУТОН */
-.sponsor-cta-wrapper { margin-top: 60px; }
 .btn-cyber {
     position: relative; 
     padding: 15px 40px; 
@@ -894,6 +870,7 @@ max-height: 45px;
     border: 1px solid var(--secondary); 
     transition: 0.5s; 
     display: inline-block;
+    margin-top: 40px;
 }
 
 .btn-cyber:hover { 
@@ -902,8 +879,46 @@ max-height: 45px;
     color: #000; 
 }
 
-        /* TICKETS */
-/* --- НОВ HIGH-TECH TICKETS CSS --- */
+@media (max-width: 768px) {
+    #partners h2 {
+        font-size: 32px !important;
+        letter-spacing: -1px !important;
+        margin-bottom: 30px !important;
+    }
+
+    .strategic-label {
+        font-size: 10px !important;
+        letter-spacing: 2px !important;
+    }
+
+    /* ТРИТЕ ЛОГА НА ЕДИН РЕД */
+    .big-logos-row {
+        flex-direction: row !important; /* Връщаме ги в ред */
+        justify-content: space-between !important; /* Равно разстояние */
+        gap: 15px !important; /* Минимално разстояние */
+        padding: 0 10px;
+    }
+
+    .big-logo-item {
+        flex: 1; /* Всяко заема еднакво място */
+        max-width: 30%; /* Ограничаваме, за да не се застъпят */
+    }
+
+    .partner-logo-big {
+        height: 35px !important; /* Смаляваме ги, за да се съберат */
+        margin-bottom: 8px !important;
+    }
+
+    .big-logo-item span {
+        font-size: 10px !important; /* Малък текст за мобилен */
+        letter-spacing: 0.5px !important;
+        white-space: nowrap; /* Да не се пренася на нов ред */
+    }
+}
+       /* ============================================================
+   TICKETS SECTION - FULL HIGH-TECH DESIGN
+   ============================================================ */
+
 .ticket-grid { 
     display: grid; 
     grid-template-columns: repeat(3, 1fr); 
@@ -921,7 +936,7 @@ max-height: 45px;
 }
 
 .ticket-card { 
-   transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
     background: rgba(255, 255, 255, 0.02); 
     border: 1px solid rgba(255, 255, 255, 0.1); 
     padding: 50px 30px; 
@@ -948,7 +963,7 @@ max-height: 45px;
 .ticket-card:hover::after { left: 100%; }
 
 .ticket-card:hover {
-transform: translateY(-15px) scale(1.02) !important;    
+    transform: translateY(-15px) scale(1.02) !important;     
     border-color: var(--secondary) !important;
     box-shadow: 0 20px 40px rgba(0,0,0,0.6);
 }
@@ -965,17 +980,16 @@ transform: translateY(-15px) scale(1.02) !important;
     letter-spacing: 1px !important;
     text-decoration: none !important;
     transition: all 0.3s ease !important;
-    min-width: 200px !important; /* Прави ги еднакво широки */
-    background: var(--primary) !important; /* Еднакъв цвят за всички */
+    min-width: 200px !important; 
+    background: var(--primary) !important; 
     color: white !important;
     border: none !important;
 }
 
-        /* Добави това веднага под .btn { ... } */
 .btn:hover {
     transform: scale(1.05) translateY(-3px) !important;
     filter: brightness(1.2) !important;
-    background: var(--secondary) !important; /* Всички стават сини при посочване */
+    background: var(--secondary) !important; 
     box-shadow: 0 10px 25px rgba(6, 182, 212, 0.4) !important;
 }
 
@@ -1000,44 +1014,19 @@ transform: translateY(-15px) scale(1.02) !important;
 .ticket-card li { font-size: 12px; color: #94a3b8; margin: 12px 0; display: flex; align-items: center; justify-content: center; gap: 8px; }
 .ticket-card li i { color: var(--secondary); font-size: 10px; }
 
-.modal-overlay {
-    display: none;
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(2, 6, 23, 0.98);
-    z-index: 10000;
-    align-items: center; justify-content: center;
-    backdrop-filter: blur(10px);
-}
-.modal-content {
-    background: var(--bg);
-    padding: 40px;
-    border-radius: 24px;
-    border: 1px solid var(--primary);
-    width: 90%; max-width: 400px;
-    position: relative;
-    color: var(--text-main);
-    box-shadow: 0 0 30px rgba(129, 140, 248, 0.2);
-}
-.modal-content input {
-    width: 100%; padding: 12px; margin: 10px 0;
-    background: #1e293b; border: 1px solid #334155;
-    color: white; border-radius: 8px; outline: none;
-    font-family: inherit;
-}
-.modal-content input:focus { border-color: var(--secondary); }
-
 /* Дизайн за промо кода под бутона */
 .ticket-card div[onclick^="openBooking"] {
     display: inline-block;
     padding: 6px 12px;
     border-radius: 6px;
-    background: rgba(34, 211, 238, 0.03); /* Съвсем лек фон */
+    background: rgba(34, 211, 238, 0.03);
     border: 1px solid rgba(34, 211, 238, 0.1);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     text-transform: uppercase;
     letter-spacing: 1px;
-    text-decoration: none !important; /* Махаме стандартната подчертавка за по-модерен вид */
+    cursor: pointer;
+    font-size: 11px;
+    color: var(--secondary);
 }
 
 .ticket-card div[onclick^="openBooking"]:hover {
@@ -1048,15 +1037,67 @@ transform: translateY(-15px) scale(1.02) !important;
     transform: translateY(-1px);
 }
 
+/* ============================================================
+   FINAL MOBILE OPTIMIZATION (THE "SLIM" FIX)
+   ============================================================ */
 
-@media (max-width: 1024px) {
-    .ticket-grid { grid-template-columns: 1fr; }
-    .last-row { flex-direction: column; align-items: center; }
-    .vip-card, .corp-card { width: 100%; }
+@media (max-width: 768px) {
+    /* Наместваме грида в една колона */
+    .ticket-grid, .last-row {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 15px !important;
+        margin-top: 30px !important;
+        padding: 0 15px !important;
+    }
+
+    /* Правим картите малки и премахваме фиксираните ширини */
+    .ticket-card, .vip-card, .corp-card {
+        width: 100% !important;
+        max-width: 300px !important; /* Намаляваме ги визуално */
+        padding: 20px !important; /* Свиваме празното пространство */
+        min-height: auto !important;
+        height: auto !important;
+        border-radius: 20px !important;
+        transform: none !important; /* Махаме отместването на мобилен */
+    }
+
+    /* Компактни текстове */
+    .ticket-card h3 {
+        font-size: 1.1rem !important;
+        margin-bottom: 5px !important;
+    }
+
+    .ticket-card .price {
+        font-size: 1.6rem !important;
+        margin-bottom: 10px !important;
+    }
+
+    .ticket-card ul {
+        margin: 10px 0 !important;
+    }
+
+    .ticket-card li {
+        font-size: 11px !important;
+        margin: 5px 0 !important;
+    }
+
+    /* Малък бутон */
+    .btn {
+        min-width: 100% !important;
+        padding: 10px 20px !important;
+        font-size: 12px !important;
+    }
+
+    /* Линка за промо код */
+    .ticket-card div[onclick^="openBooking"] {
+        font-size: 9px !important;
+        margin-top: 10px !important;
+    }
 }
-  
 
-        /* ORGANIZER */
+/* --- ORGANIZER SECTION (DESKTOP) --- */
 .org-section { 
     display: flex; 
     gap: 80px; 
@@ -1065,12 +1106,15 @@ transform: translateY(-15px) scale(1.02) !important;
     background: radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.05), transparent);
     border-radius: 40px;
     border: 1px solid rgba(255, 255, 255, 0.03);
+    max-width: 1400px;
+    margin: 40px auto;
 }
 
 /* Фенси рамка за снимката */
 .org-img-wrapper {
     position: relative;
     padding: 15px;
+    flex: 0 0 auto;
 }
 
 .org-img-wrapper::before {
@@ -1079,7 +1123,8 @@ transform: translateY(-15px) scale(1.02) !important;
     top: 0; left: 0; width: 100%; height: 100%;
     border: 2px solid var(--secondary);
     border-radius: 30px;
-    clip-path: polygon(0 0, 30% 0, 30% 10%, 0 10%, 0 90%, 10% 90%, 10% 100%, 0 100%); /* High-tech ъгли */
+    clip-path: polygon(0 0, 30% 0, 30% 10%, 0 10%, 0 90%, 10% 90%, 10% 100%, 0 100%);
+    z-index: 1;
 }
 
 .org-img { 
@@ -1089,16 +1134,18 @@ transform: translateY(-15px) scale(1.02) !important;
     border-radius: 20px; 
     filter: grayscale(0.2) contrast(1.1);
     box-shadow: 0 0 30px rgba(0,0,0,0.5);
+    display: block;
 }
 
+/* Съдържание и Текст */
 .org-content h2 { 
-   font-size: 48px; 
+    font-size: 48px; 
     background: linear-gradient(90deg, #fff, var(--secondary));
-    -webkit-background-clip: text; /* ТОВА ЛИПСВАШЕ - изрязва фона по формата на буквите */
+    -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin-top: 5px; /* Малко място, за да не се застъпват */
-    display: inline-block; /* Помага на браузъра да изчисли правилно мястото на текста */
+    margin: 10px 0 25px 0;
+    line-height: 1.1;
 }
 
 .org-title {
@@ -1107,13 +1154,19 @@ transform: translateY(-15px) scale(1.02) !important;
     letter-spacing: 3px;
     font-size: 12px;
     font-weight: 800;
-    margin-bottom: 10px; /* Малко намаляваме за по-добра подредба */
     display: block;
-    position: relative; /* Гарантира, че ще е над всякакви фонове */
-    z-index: 2;
 }
 
-/* Секция с бизнеси/опит */
+/* Стилизиране на параграфите (p) вътре в секцията */
+.org-content p {
+    color: #cbd5e1;
+    line-height: 1.8;
+    font-size: 15px;
+    margin-bottom: 20px;
+    max-width: 600px; /* Ограничаваме за четливост на десктоп */
+}
+
+/* Секция с опит (Meta) */
 .org-meta {
     display: flex;
     gap: 30px;
@@ -1125,36 +1178,189 @@ transform: translateY(-15px) scale(1.02) !important;
     padding-left: 15px;
 }
 
-.meta-item span { display: block; font-size: 10px; color: #64748b; text-transform: uppercase; }
-.meta-item b { font-size: 14px; color: #fff; }
-
-/* Бутони */
-.org-btns { display: flex; 
-    gap: 15px; 
-    margin-top: 30px; }
-        .org-btns a { 
-    transition: all 0.3s ease !important; 
+.meta-item span { 
+    display: block; 
+    font-size: 10px; 
+    color: #64748b; 
+    text-transform: uppercase; 
 }
 
-/* 3. ОСТАВИ 'a:hover' ТУК - това е ефектът при посочване */
-.org-btns a:hover {
-    transform: translateY(-3px);
-    background: rgba(255, 255, 255, 0.1) !important;
+.meta-item b { 
+    font-size: 14px; 
+    color: #fff; 
+}
+
+/* Бутони */
+.org-btns { 
+    display: flex; 
+    gap: 15px; 
+    margin-top: 30px; 
 }
 
 .btn-linktree {
-    background: linear-gradient(45deg, #06b6d4, #6366f1);
+    background: linear-gradient(45deg, #06b6d4, #6366f1) !important;
     color: white !important;
     border: none !important;
-    box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
-    transition: all 0.3s ease !important;
 }
 
-.btn-linktree:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 15px 30px rgba(99, 102, 241, 0.5);
+/* --- IPHONE & MOBILE REALITY FIX (ПОД 768px) --- */
+@media (max-width: 768px) {
+    .org-section {
+        flex-direction: column !important;
+        padding: 50px 20px !important;
+        gap: 35px !important;
+        text-align: center;
+        margin: 20px 10px;
+    }
+
+    .org-img {
+        width: 280px !important; /* По-малък за iPhone */
+        height: 350px !important;
+    }
+
+    .org-img-wrapper {
+        padding: 10px !important;
+    }
+
+    .org-content h2 {
+        font-size: 18px !important;
+    }
+
+    .org-content p {
+        font-size: 14px !important;
+        max-width: 100% !important; /* Важно: заема целия екран */
+        text-align: left; /* Вляво е по-лесно за четене */
+    }
+
+    .org-meta {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 10px !important;
+    }
+
+    .org-btns {
+        flex-direction: column !important;
+        width: 100% !important;
+    }
+
+    .org-btns a {
+        width: 100% !important;
+        justify-content: center !important;
+    }
 }
 
+
+/* ============================================================
+   FAQ STYLES - FULL VERSION (Desktop + Mobile)
+   ============================================================ */
+
+.faq-section { 
+    padding: 80px 10%; 
+    background: rgba(0,0,0,0.2); 
+}
+
+.faq-container { 
+    max-width: 800px; 
+    margin: 0 auto; 
+}
+
+.faq-item {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    margin-bottom: 15px;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow: hidden;
+    cursor: pointer;
+}
+
+/* Ефект при посочване (Desktop) */
+.faq-item:hover {
+    border-color: var(--secondary);
+    background: rgba(255, 255, 255, 0.07);
+    transform: translateY(-2px);
+}
+
+.faq-header {
+    padding: 20px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.faq-header h3 {
+    font-size: 18px;
+    color: #fff;
+    margin: 0;
+    font-weight: 600;
+}
+
+.faq-icon {
+    color: var(--secondary);
+    transition: transform 0.4s ease;
+    font-weight: bold;
+}
+
+/* Скрит текст */
+.faq-content {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 1.2s cubic-bezier(0.33, 1, 0.68, 1), 
+                opacity 0.8s ease-in-out;
+}
+
+.faq-content p {
+    padding: 0 25px 25px 25px;
+    margin: 0;
+    color: #94a3b8;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+/* Активиране на съдържанието при Hover */
+.faq-item:hover .faq-content {
+    max-height: 200px; /* Достатъчно за десктоп */
+    opacity: 1;
+}
+
+.faq-item:hover .faq-icon {
+    transform: rotate(45deg);
+    color: var(--primary);
+}
+
+/* ------------------------------------------------------------
+   MOBILE OPTIMIZATION (Media Query)
+   ------------------------------------------------------------ */
+@media (max-width: 1024px) {
+    .faq-section {
+        padding: 60px 5%;
+    }
+
+    .faq-header {
+        padding: 15px 20px;
+    }
+
+    .faq-header h3 {
+        font-size: 16px;
+    }
+
+    .faq-content p {
+        padding: 0 20px 20px 20px;
+        font-size: 14px;
+    }
+
+    /* На мобилен текстът става по-дълъг заради тесния екран */
+    .faq-item:hover .faq-content {
+        max-height: 500px; /* Увеличен лимит, за да не се реже текста */
+        opacity: 1;
+    }
+
+    /* Премахваме местенето нагоре на мобилен за по-стабилен скрол */
+    .faq-item:hover {
+        transform: none;
+    }
+}
 /* GOOGLE MAP */
 .venue-card {
     position: relative;
@@ -1237,64 +1443,6 @@ transform: translateY(-15px) scale(1.02) !important;
 /* FOOTER */
 footer { padding: 50px 5%; border-top: 1px solid rgba(255,255,255,0.05); text-align: center; color: #64748b; }
 
-@media (max-width: 1024px) {
-    .org-section { flex-direction: column; text-align: center; gap: 40px; }
-    .org-meta { justify-content: center; }
-}
-/* --- MOBILE EXPERIENCE FIXES (NON-HOVER DEVICES) --- */
-@media (hover: none) {
-    /* 1. Лекторите: Снимките да са цветни по подразбиране, 
-       защото на телефон няма как да разберат, че стават цветни */
-    .sp-card img {
-        filter: grayscale(0) !important;
-        transform: scale(1.05);
-    }
-    
-    .sp-info {
-        transform: translateY(0) !important;
-        background: linear-gradient(0deg, rgba(2,6,23,0.9) 0%, rgba(2,6,23,0) 100%);
-    }
-
-    /* 2. Билети: Показваме лек блясък, за да изглеждат интерактивни */
-    .ticket-card {
-        border: 1px solid rgba(129, 140, 248, 0.3);
-    }
-    
-    /* 3. FAQ: Тъй като няма ховър, добавяме малка индикация (стрелка), 
-       че може да се натиска, и правим текста по-видим */
-    .faq-item::after {
-        content: '+';
-        position: absolute;
-        right: 20px;
-        top: 20px;
-        color: var(--primary);
-        font-size: 20px;
-    }
-
-    /* Правим съдържанието на FAQ малко по-светло за по-добра четивност на екран */
-    .faq-content {
-        color: var(--text-main) !important;
-    }
-}
-
-/* 4. Оптимизация на грида за таблет и телефон */
-@media (max-width: 1024px) {
-    .sp-grid {
-        grid-template-columns: repeat(2, 1fr) !important; /* 2 колони на таблет */
-        gap: 15px;
-    }
-}
-
-@media (max-width: 640px) {
-    .sp-grid {
-        grid-template-columns: 1fr !important; /* 1 колона на телефон */
-    }
-    
-    .hero-title {
-        font-size: 40px !important; /* Да не излиза от екрана */
-    }
-}
-
 
     </style>
 </head>
@@ -1303,21 +1451,27 @@ footer { padding: 50px 5%; border-top: 1px solid rgba(255,255,255,0.05); text-al
     <canvas id="dna-canvas"></canvas>
 
     <nav>
-        <a href="https://tech-bridge.co/" class="logo-link">
+    <a href="https://tech-bridge.co/" class="logo-link">
         <img src="tb.png" alt="TECH BRIDGE" class="navbar-logo">
     </a>
-        <div class="nav-links">
-            <a href="#speakers">Speakers</a>
-            <a href="#agenda">Agenda</a>
-            <a href="#partners">Partners</a>
-            
-             <a href="#tickets">Tickets</a>
-             <a href="#faq-section">FAQ</a>
-             <a href="#venue-section">LOCATION</a>
 
-        </div>
-        <a href="#contact" class="btn" style="padding: 10px 20px;">Sponsor</a>
-    </nav>
+    <div class="nav-links" id="navLinks">
+        <a href="#speakers">Speakers</a>
+        <a href="#agenda">Agenda</a>
+        <a href="#partners">Partners</a>
+        <a href="#tickets">Tickets</a>
+        <a href="#faq-section">FAQ</a>
+        <a href="#venue-section">LOCATION</a>
+        <a href="#contact">BE A SPONSOR</a>
+    </div>
+
+    <div class="menu-toggle" id="mobile-menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+    </div>
+
+</nav>
 
  <section class="hero-clean">
     <video autoplay muted loop playsinline class="hero-video">
@@ -1364,13 +1518,13 @@ footer { padding: 50px 5%; border-top: 1px solid rgba(255,255,255,0.05); text-al
     </div>
 </div>
 
-<section id="speakers" style="padding: 80px 0; background: #000;">
-    <h2 style="font-size: 65px; font-weight: 800; letter-spacing: 1px; line-height: 1; text-align: center; color: #ffffff; margin-bottom: 60px;"> The Architects Of The Future</h2>
+<section id="speakers">
+    <h2> The Architects Of The Future</h2>
 
     <div class="sp-grid">
 
         <div class="sp-card">
-            <div class="sp-img-container"><img src="nadin.jpeg" alt="Nadine Hamud"></div>
+            <div class="sp-img-container"><img src="nadin.jpeg" loading="lazy" alt="Nadine Hamud"></div>
             <div class="sp-info">
                 <div class="sp-text">
                     <h4>Nadin Hamud</h4>
@@ -1381,7 +1535,7 @@ footer { padding: 50px 5%; border-top: 1px solid rgba(255,255,255,0.05); text-al
             </div>
         </div>
         <div class="sp-card">
-            <div class="sp-img-container"><img src="milen.jpeg" alt="Milen Petrov"></div>
+            <div class="sp-img-container"><img src="milen.jpeg" loading="lazy" alt="Milen Petrov"></div>
             <div class="sp-info">
                 <div class="sp-text">
                     <h4>Milen Petrov</h4>
@@ -1395,7 +1549,7 @@ footer { padding: 50px 5%; border-top: 1px solid rgba(255,255,255,0.05); text-al
     <div class="sp-img-container">
         <div class="mystery-overlay">
             <i class="fas fa-lock"></i> </div>
-        <img src="mystery.jpg" alt="Secret Guest" style="filter: blur(25px) brightness(0.5);">
+        <img src="mystery.jpg" loading="lazy" alt="Secret Guest" style="filter: blur(25px) brightness(0.5);">
     </div>
     <div class="sp-info">
         <div class="sp-text">
@@ -1408,7 +1562,7 @@ footer { padding: 50px 5%; border-top: 1px solid rgba(255,255,255,0.05); text-al
     <div class="sp-img-container">
         <div class="mystery-overlay">
             <i class="fas fa-lock"></i> </div>
-        <img src="mystery.jpg" alt="Secret Guest" style="filter: blur(25px) brightness(0.5);">
+        <img src="mystery.jpg" loading="lazy" alt="Secret Guest" style="filter: blur(25px) brightness(0.5);">
     </div>
     <div class="sp-info">
         <div class="sp-text">
@@ -1419,7 +1573,7 @@ footer { padding: 50px 5%; border-top: 1px solid rgba(255,255,255,0.05); text-al
     </div>
 </div>
          <div class="sp-card">
-            <div class="sp-img-container"><img src="alina.jpg" alt="Alina Yaneva"></div>
+            <div class="sp-img-container"><img src="alina.jpg" loading="lazy" alt="Alina Yaneva"></div>
             <div class="sp-info">
                 <div class="sp-text">
                     <h4>Alina Yaneva</h4>
@@ -1430,7 +1584,7 @@ footer { padding: 50px 5%; border-top: 1px solid rgba(255,255,255,0.05); text-al
             </div>
         </div>
         <div class="sp-card">
-            <div class="sp-img-container"><img src="vivanov.jpg" alt="Ventsislav Ivanov"></div>
+            <div class="sp-img-container"><img src="vivanov.jpg" loading="lazy" alt="Ventsislav Ivanov"></div>
             <div class="sp-info">
                 <div class="sp-text">
                     <h4>Ventsislav Ivanov</h4>
@@ -1440,7 +1594,7 @@ footer { padding: 50px 5%; border-top: 1px solid rgba(255,255,255,0.05); text-al
                 <a href="https://www.linkedin.com/in/ventsislav-ivanov-45a9761a9/" target="_blank" class="sp-social-link"><i class="fab fa-linkedin"></i></a>
             </div></div>
  <div class="sp-card">
-            <div class="sp-img-container"><img src="ashme.jpg" alt="Ashmee Banerjee"></div>
+            <div class="sp-img-container"><img src="ashme.jpg" loading="lazy" alt="Ashmee Banerjee"></div>
             <div class="sp-info">
                 <div class="sp-text">
                     <h4>Ashmee Banerjee</h4>
@@ -1450,7 +1604,7 @@ footer { padding: 50px 5%; border-top: 1px solid rgba(255,255,255,0.05); text-al
                 <a href="https://www.linkedin.com/in/ashmi-banerjee/" target="_blank" class="sp-social-link"><i class="fab fa-linkedin"></i></a>
             </div></div>
         <div class="sp-card">
-            <div class="sp-img-container"><img src="kris.jpg" alt="Kris Spartanska"></div>
+            <div class="sp-img-container"><img src="kris.jpg" loading="lazy" alt="Kris Spartanska"></div>
             <div class="sp-info">
                 <div class="sp-text">
                     <h4>Kris Spartanska</h4>
@@ -1461,7 +1615,7 @@ footer { padding: 50px 5%; border-top: 1px solid rgba(255,255,255,0.05); text-al
             </div>
         </div>
         <div class="sp-card">
-            <div class="sp-img-container"><img src="antoan.jfif" alt="Antoan Shotarov"></div>
+            <div class="sp-img-container"><img src="antoan.jfif" loading="lazy" alt="Antoan Shotarov"></div>
             <div class="sp-info">
                 <div class="sp-text">
                     <h4>Antoan Shotarov</h4>
@@ -1472,7 +1626,7 @@ footer { padding: 50px 5%; border-top: 1px solid rgba(255,255,255,0.05); text-al
             </div>
         </div>
         <div class="sp-card">
-            <div class="sp-img-container"><img src="anastasia.jfif" alt="Anastasia Stoyanova-Dragoeva"></div>
+            <div class="sp-img-container"><img src="anastasia.jfif" loading="lazy" alt="Anastasia Stoyanova-Dragoeva"></div>
             <div class="sp-info">
                 <div class="sp-text">
                     <h4>Anastasia S.- Dragoeva</h4>
@@ -1483,7 +1637,7 @@ footer { padding: 50px 5%; border-top: 1px solid rgba(255,255,255,0.05); text-al
             </div>
         </div>
         <div class="sp-card">
-            <div class="sp-img-container"><img src="georgi.jpg" alt="Georgi Malchev"></div>
+            <div class="sp-img-container"><img src="georgi.jpg" loading="lazy" alt="Georgi Malchev"></div>
             <div class="sp-info">
                 <div class="sp-text">
                     <h4>Georgi Malchev</h4>
@@ -1494,7 +1648,7 @@ footer { padding: 50px 5%; border-top: 1px solid rgba(255,255,255,0.05); text-al
             </div>
         </div>
  <div class="sp-card">
-            <div class="sp-img-container"><img src="silvia.jpeg" alt="Silvia Andreeva"></div>
+            <div class="sp-img-container"><img src="silvia.jpeg" loading="lazy" alt="Silvia Andreeva"></div>
             <div class="sp-info">
                 <div class="sp-text">
                     <h4>Silvia Andreeva</h4>
@@ -1505,7 +1659,7 @@ footer { padding: 50px 5%; border-top: 1px solid rgba(255,255,255,0.05); text-al
             </div>
         </div>
 <div class="sp-card">
-            <div class="sp-img-container"><img src="plamen.jpeg" alt="Plamen Vasilev"></div>
+            <div class="sp-img-container"><img src="plamen.jpeg" loading="lazy" alt="Plamen Vasilev"></div>
             <div class="sp-info">
                 <div class="sp-text">
                     <h4>Plamen Vasilev</h4>
@@ -1516,7 +1670,7 @@ footer { padding: 50px 5%; border-top: 1px solid rgba(255,255,255,0.05); text-al
             </div>
         </div>
          <div class="sp-card">
-            <div class="sp-img-container"><img src="anton.png" alt="Anton Puliyski"></div>
+            <div class="sp-img-container"><img src="anton.png" loading="lazy" alt="Anton Puliyski"></div>
             <div class="sp-info">
                 <div class="sp-text">
                     <h4>Anton Puliyski</h4>
@@ -1527,7 +1681,7 @@ footer { padding: 50px 5%; border-top: 1px solid rgba(255,255,255,0.05); text-al
             </div>
         </div>
         <div class="sp-card">
-            <div class="sp-img-container"><img src="dimana.jfif" alt="Dimana Dodova"></div>
+            <div class="sp-img-container"><img src="dimana.jfif" loading="lazy" alt="Dimana Dodova"></div>
             <div class="sp-info">
                 <div class="sp-text">
                     <h4>Dimana Dodova</h4>
@@ -1666,7 +1820,7 @@ footer { padding: 50px 5%; border-top: 1px solid rgba(255,255,255,0.05); text-al
 </section>
 
      <section id="tickets">
-    <h2 style="font-size: 65px; font-weight: 800; letter-spacing: -3px; line-height: 1; text-align: center; color: #ffffff; margin-bottom: 60px;">TICKETS</h2>
+    <h2">TICKETS</h2>
     
     <div class="ticket-grid">
         <div class="ticket-card">
@@ -1679,16 +1833,16 @@ footer { padding: 50px 5%; border-top: 1px solid rgba(255,255,255,0.05); text-al
             <a href="https://checkout.revolut.com/pay/39b40c31-99cc-4afc-b4f8-679289c2383d " class="btn">Secure Access</a>
         </div>
 
-<div class="ticket-card" style="border-color: var(--primary);">
+<div class="ticket-card">
     <h3>STANDARD</h3>
     <div class="price">60€</div>
     <ul>
         <li><i class="fas fa-check-circle"></i> Full Event Access</li>
         <li><i class="fas fa-check-circle"></i> Cocktail Zone</li>
     </ul>
-    <a href="https://checkout.revolut.com/pay/99c33593-bc68-4967-9389-ffe850206f96" class="btn" style="background: var(--primary); color: white;">Secure Access</a>
+    <a href="https://checkout.revolut.com/pay/99c33593-bc68-4967-9389-ffe850206f96" class="btn">Secure Access</a>
     
-    <div onclick="openBooking('standard')" style="margin-top: 12px; font-size: 11px; color: var(--secondary); cursor: pointer; text-decoration: underline; font-weight: 500;">I have a promo code</div>
+    <div onclick="openBooking('standard')">I have a promo code</div>
 </div>
 
 <div class="ticket-card">
@@ -1702,9 +1856,9 @@ footer { padding: 50px 5%; border-top: 1px solid rgba(255,255,255,0.05); text-al
 
 <div class="last-row">
     <div class="ticket-card vip-card">
-        <div style="color: var(--primary); font-size: 10px; font-weight: 800; letter-spacing: 2px; margin-bottom: 10px;">MOST EXCLUSIVE</div>
+        <div>MOST EXCLUSIVE</div>
         <h3>VIP LUXURY</h3>
-        <div class="price" style="font-size: 54px; margin: 15px 0;">125€</div>
+        <div class="price">125€</div>
     <ul>
 
                     <li><i class="fas fa-comment-dots"></i> <b>EVERYTHING IN STANDARD</b></li>
@@ -1718,26 +1872,26 @@ footer { padding: 50px 5%; border-top: 1px solid rgba(255,255,255,0.05); text-al
                 </ul>
 
 
-        <a href="https://checkout.revolut.com/pay/5489172e-0d78-48e5-93e8-18563e1c4b45" class="btn" style="background: white; color: black; width: 100%; font-weight: 900;">BECOME A VIP</a>
+        <a href="https://checkout.revolut.com/pay/5489172e-0d78-48e5-93e8-18563e1c4b45" class="btn">BECOME A VIP</a>
         
-        <div onclick="openBooking('gold')" style="margin-top: 12px; font-size: 11px; color: white; cursor: pointer; text-decoration: underline; font-weight: 500; opacity: 0.8;">I have a promo code</div>
+        <div onclick="openBooking('gold')">I have a promo code</div>
     </div>
             <div class="ticket-card corp-card">
-                <div style="background: var(--secondary); color: black; font-size: 10px; font-weight: 800; padding: 5px 15px; border-radius: 50px; display: inline-block; margin-bottom: 15px;">BUNDLE OFFER</div>
+                <div>BUNDLE OFFER</div>
                 <h3>CORPORATE</h3>
                 <div class="price">€250</div>
                 <ul>
                     <li><i class="fas fa-users"></i> ACCESS FOR 5 </li>
                 </ul>
-                <a href="https://checkout.revolut.com/pay/d53e5781-3efa-420f-b305-cc4c64e5015b " class="btn" style="border: 1px solid var(--secondary); background: transparent; color: white;">Secure Bundle</a>
+                <a href="https://checkout.revolut.com/pay/d53e5781-3efa-420f-b305-cc4c64e5015b " class="btn">Secure Bundle</a>
             </div>
         </div>
     </div>
 </section>
 <section id="partners" class="partners-hitech-section">
-    <h2 style="font-size: 65px; font-weight: 800; letter-spacing: -3px; line-height: 1; text-align: center; color: #ffffff; margin-bottom: 60px;">PARTNERS & SPONSORS</h2>
+    <h2">PARTNERS & SPONSORS</h2>
     
-    <span class="strategic-label" style="font-size:13px; font-weight: 800; letter-spacing: 5px; text-align:center; margin-bottom:40px; color: #06b6d4;">Global Strategic Partners</span>
+    <span class="strategic-label">Global Strategic Partners</span>
 
     <div class="big-logos-row">
         <div class="big-logo-item">
@@ -1788,20 +1942,20 @@ footer { padding: 50px 5%; border-top: 1px solid rgba(255,255,255,0.05); text-al
         <div class="org-content">
            <span class="org-title">Strategic Architect & Founder</span>
         <h2>Shule Yashar</h2>
- <p style="color: #feffff; line-height: 1.8; max-width: 600px; font-size: 15px; margin-bottom: 15px;">
+ <p >
     <strong>Shule Yashar</strong> is the driving force behind <strong>DS Legacy</strong> and <strong>Tech Club "BitFlame"</strong>. 
     With 7+ years of Technical Project Management experience and a Bachelor of Finance, she specializes in converting 
     high-level business visions into <strong>audit-ready operational blueprints</strong>.
 </p>
 
-<p style="color: #feffff; line-height: 1.8; max-width: 600px; font-size: 15px; margin-bottom: 15px;">
+<p >
     Through <strong>DS Legacy</strong>, Shule bridges the gap between <strong>on-chain data</strong> and <strong>executive business logic</strong>, 
     ensuring that decentralized ventures scale with precision. Her leadership has propelled <strong>BitFlame</strong> 
     into a premier tech ecosystem, securing strategic partnerships with <strong>Google Developers Group, Viber, and Invest Sofia</strong> 
     within its first 6 months.
 </p>
 
-<p style="color: #feffff; line-height: 1.8; max-width: 600px; font-size: 15px; margin-bottom: 0;">
+<p>
     <strong>Certified Expertise:</strong> Shule holds credentials from <strong>Google (Project Management)</strong> and <strong>INSEAD (Blockchain Specialization)</strong>, merging enterprise-grade Agile leadership with deep Web3 technical stacks.
 </p>
 <p>
@@ -1836,7 +1990,7 @@ footer { padding: 50px 5%; border-top: 1px solid rgba(255,255,255,0.05); text-al
 </section>
 <section id="faq-section" class="faq-section">
     <span class="org-title">Support</span>
-    <h2 style="font-size: 65px; font-weight: 800; letter-spacing: -3px; line-height: 1; text-align: center; color: #ffffff; margin-bottom: 60px;">FAQ</h2>
+    <h2">FAQ</h2>
     <div class="faq-container">
         <div class="faq-item">
             <div class="faq-header" onclick="toggleFaq(this)">
@@ -2144,6 +2298,28 @@ document.addEventListener('DOMContentLoaded', () => {
     
     document.querySelectorAll('section').forEach(s => observer.observe(s));
 });
+
+/* ТУК ДОБАВЯМЕ ЛОГИКАТА ЗА МОБИЛНОТО МЕНЮ */
+    const menu = document.querySelector('#mobile-menu');
+    const menuLinks = document.querySelector('#navLinks');
+
+    if (menu) {
+        menu.addEventListener('click', function() {
+            menu.classList.toggle('active');
+            menuLinks.classList.toggle('active');
+        });
+    }
+
+    // Логика за затваряне на мобилното меню при избор на линк
+    const mobileMenuBtn = document.getElementById('mobile-menu');
+    const mobileNavLinks = document.getElementById('navLinks');
+
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+            if (mobileMenuBtn) mobileMenuBtn.classList.remove('active');
+            if (mobileNavLinks) mobileNavLinks.classList.remove('active');
+        });
+    });
 </script>
 </body>
 </html>
