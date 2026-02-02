@@ -373,11 +373,10 @@ video.hero-video {
     display: grid; 
     grid-template-columns: repeat(4, 1fr); 
     gap: 25px; 
-    margin-top: 50px;
+    margin: 50px auto;
     max-width: 1350px; 
-    margin-left: auto;  
-    margin-right: auto; 
-    align-items: start;
+    /* stretch гарантира, че всички карти в един ред ще са еднакво високи */
+    align-items: stretch; 
 }
 
 .sp-card { 
@@ -387,7 +386,10 @@ video.hero-video {
     overflow: hidden; 
     transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
     position: relative;
-    width: 100%; /* Гарантира, че няма да излиза от грида */
+    width: 100%;
+    /* Правим картата flex контейнер, за да може инфото да се разпъва до дъното */
+    display: flex;
+    flex-direction: column;
 }
 
 .sp-card:hover {
@@ -401,6 +403,7 @@ video.hero-video {
     aspect-ratio: 1/1;
     overflow: hidden;
     position: relative;
+    flex-shrink: 0; /* Снимката не се мачка при разтягане на картата */
 }
 
 .sp-card img { 
@@ -425,19 +428,45 @@ video.hero-video {
     justify-content: space-between;
     align-items: flex-end;
     border-top: 1px solid rgba(255, 255, 255, 0.05);
+    /* Разпъва инфо секцията до дъното на картата */
+    flex-grow: 1; 
 }
 
-.sp-text { flex: 1; }
-.sp-info h4 { font-size: 20px; font-weight: 800; color: #fff; margin-bottom: 2px; }
-.sp-info .role { color: #e1e5ea; font-size: 14px; display: block; margin-bottom: 4px; }
-.sp-info .company { color: var(--secondary); font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+.sp-text { 
+    flex: 1; 
+    /* Предотвратява застъпване на иконата от текста */
+    padding-right: 10px; 
+}
+
+.sp-info h4 { 
+    font-size: 20px; 
+    font-weight: 800; 
+    color: #fff; 
+    margin-bottom: 2px; 
+    line-height: 1.2;
+}
+
+.sp-info .role { 
+    color: #e1e5ea; 
+    font-size: 14px; 
+    display: block; 
+    margin-bottom: 4px; 
+}
+
+.sp-info .company { 
+    color: var(--secondary); 
+    font-size: 10px; 
+    font-weight: 800; 
+    text-transform: uppercase; 
+    letter-spacing: 1px; 
+}
 
 .sp-social-link { 
     color: rgba(255, 255, 255, 0.3); 
     font-size: 26px; 
     transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); 
     display: flex;
-    margin-left: 15px;
+    flex-shrink: 0; /* Гарантира, че иконата няма да се смачка */
 }
 
 .sp-card:hover .sp-social-link {
@@ -446,6 +475,7 @@ video.hero-video {
     filter: drop-shadow(0 0 10px rgba(0, 119, 181, 0.8));
 }
 
+/* --- MYSTERY OVERLAY --- */
 .mystery-overlay {
     position: absolute;
     top: 0; left: 0; width: 100%; height: 100%;
@@ -467,73 +497,62 @@ video.hero-video {
     100% { transform: scale(1); opacity: 0.8; }
 }
 
+/* --- MOBILE RESPONSIVE --- */
+
 @media (max-width: 768px) {
-    /* 1. ГРИД: Правим редовете със строго дефинирана височина */
     .sp-grid {
-        display: grid !important;
-        grid-template-columns: repeat(2, 1fr) !important;
-        grid-auto-rows: 1fr; /* Всички карти на един ред ще са високи колкото най-високата */
-        gap: 15px !important;
-        padding: 0 15px !important;
-        align-items: stretch !important; /* Форсира разтягане до еднаква височина */
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: 1fr; /* Гарантира еднаква височина на кутийките в реда */
+        gap: 12px;
+        padding: 0 10px;
     }
 
-    /* 2. КАРТАТА: Правим я Flex контейнер, за да разтеглим инфото */
     .sp-card {
-        display: flex !important;
-        flex-direction: column !important;
-        height: 100% !important; /* Заема цялата височина на грид клетката */
-        background: #0f172a;
+        height: 100%; /* Запълва височината на грид клетката */
     }
 
-    /* 3. СНИМКАТА: Фиксиран квадрат */
-    .sp-img-container {
-        width: 100% !important;
-        aspect-ratio: 1 / 1 !important;
-        flex-shrink: 0; /* Пречи на снимката да се смачква */
-    }
-
-    /* 4. ИНФОТО: Тук е ключът към еднаквото дъно */
     .sp-info {
-        padding: 12px !important;
-        flex-grow: 1; /* РАЗТЯГА инфото до дъното на картата */
+        padding: 12px;
         display: flex !important;
-        flex-direction: column !important;
-        justify-content: space-between; /* Името горе, компанията/иконата долу */
-        background: #020617 !important;
+        flex-direction: row !important; /* Връщаме ги в ред, за да са едно до друго */
+        justify-content: space-between;
+        align-items: flex-end; /* Подравнява ги към дъното */
+        flex-grow: 1;
     }
 
     .sp-text {
+        padding-right: 8px; /* Малко разстояние преди иконата */
         display: flex;
         flex-direction: column;
-        height: 100%;
+        overflow: hidden; /* Сигурност */
     }
 
     .sp-info h4 { 
-        font-size: 13px !important; 
-        line-height: 1.2 !important;
-        margin-bottom: 4px !important;
-        /* Премахваме min-height, flex-grow ще свърши работата */
+        font-size: 13px; 
+        line-height: 1.2;
+        margin-bottom: 2px;
+        word-wrap: break-word; /* Пречупва името, ако е много дълго */
+        hyphens: auto;
     }
 
     .sp-info .role { 
-        font-size: 10px !important; 
-        margin-bottom: auto; /* Бута всичко под ролята към дъното */
-        padding-bottom: 10px;
+        font-size: 10px; 
+        margin-bottom: 4px;
+        line-height: 1.1;
     }
 
     .sp-info .company { 
-        font-size: 9px !important; 
-        margin-top: 5px;
+        font-size: 8px;
+        white-space: nowrap; /* Пази компанията на един ред */
     }
 
-    /* Социалната икона - фиксирана в ъгъла */
     .sp-social-link {
-        position: absolute;
-        bottom: 12px;
-        right: 12px;
-        font-size: 18px !important;
-        margin: 0 !important;
+        /* ПРЕМАХВАМЕ position: absolute */
+        position: static !important; 
+        font-size: 22px;
+        margin-left: 5px;
+        margin-bottom: 2px; /* Подравняване спрямо текста */
+        color: #0077b5; /* Правим я видима веднага на мобилни */
     }
 }
 /* ============================================================
@@ -822,23 +841,26 @@ video.hero-video {
 }
 
 .sub-item { 
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    text-align: center; 
+    width: 180px; /* Фиксирана по-голяма ширина на всяка "станция" */
+    flex-shrink: 0;
 }
 
 .partner-logo-small { 
-    height: 45px; 
-    width: auto; 
-    margin-bottom: 10px; 
-    filter: brightness(0) invert(1) opacity(0.5); 
+    width: 150px !important; /* Значително по-големи */
+    height: 60px !important; 
+    object-fit: contain; 
+    margin-bottom: 12px; 
+    
+    /* По-изчистен филтър */
+    filter: grayscale(1) brightness(2) opacity(0.6); 
+    mix-blend-mode: screen; 
     transition: 0.3s; 
 }
 
 .sub-item:hover .partner-logo-small { 
-    filter: brightness(0) invert(1) opacity(1); 
-    transform: scale(1.1); 
+    filter: grayscale(0) brightness(1) opacity(1); 
+    mix-blend-mode: normal;
+    transform: scale(1.15); 
 }
 
 /* Текстовете в лентата */
@@ -1897,7 +1919,7 @@ footer { padding: 50px 5%; border-top: 1px solid rgba(255,255,255,0.05); text-al
         <div class="sub-item"><img src="o2k.png" class="partner-logo-small"><span class="p-name">o2k.tech</span><span class="p-tag">WEB3 TECH</span></div>
         <div class="sub-item"><img src="rewardly.png" class="partner-logo-small"><span class="p-name">Rewardly.Tech</span><span class="p-tag">WEB2 TECH</span></div>
         <div class="sub-item"><img src="bitflame.png" class="partner-logo-small"><span class="p-name">BitFlame</span><span class="p-tag">WEB2 COMMUNITY</span></div>
-            <div class="sub-item"><img src="crypto.jpg" class="partner-logo-small"><span class="p-name">Crypto Tax Forum</span><span class="p-tag">WEB3 COMMUNITY</span></div>
+            <div class="sub-item"><img src="crypto.png" class="partner-logo-small"><span class="p-name">Crypto Tax Forum</span><span class="p-tag">WEB3 COMMUNITY</span></div>
         <div class="sub-item"><img src="tuktam.png" class="partner-logo-small"><span class="p-name">Tuk-Tam</span><span class="p-tag">WEB2 COMMUNITY</span></div>
          <div class="sub-item"><img src="disrupt.png" class="partner-logo-small"><span class="p-name">DisruptHR</span><span class="p-tag">PR & LOGISTIC</span></div>
         <div class="sub-item"><img src="cyberclub.png" class="partner-logo-small"><span class="p-name">CyberCLUB/ETIC</span><span class="p-tag">PR & LOGISTIC</span></div>
@@ -1905,7 +1927,7 @@ footer { padding: 50px 5%; border-top: 1px solid rgba(255,255,255,0.05); text-al
         <div class="sub-item"><img src="o2k.png" class="partner-logo-small"><span class="p-name">o2k.tech</span><span class="p-tag">WEB3 TECH</span></div>
         <div class="sub-item"><img src="rewardly.png" class="partner-logo-small"><span class="p-name">Rewardly.Tech</span><span class="p-tag">WEB2 TECH</span></div>
         <div class="sub-item"><img src="bitflame.png" class="partner-logo-small"><span class="p-name">BitFlame</span><span class="p-tag">WEB2 COMMUNITY</span></div>
-            <div class="sub-item"><img src="crypto.jpg" class="partner-logo-small"><span class="p-name">Crypto Tax Forum</span><span class="p-tag">WEB3 COMMUNITY</span></div>
+            <div class="sub-item"><img src="crypto.png" class="partner-logo-small"><span class="p-name">Crypto Tax Forum</span><span class="p-tag">WEB3 COMMUNITY</span></div>
         <div class="sub-item"><img src="tuktam.png" class="partner-logo-small"><span class="p-name">Tuk-Tam</span><span class="p-tag">WEB2 COMMUNITY</span></div>
 
     </div>
